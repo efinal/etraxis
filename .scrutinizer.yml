@@ -1,0 +1,14 @@
+checks:
+    php: true
+
+tools:
+    external_code_coverage:
+        timeout: 1200
+
+filter:
+    excluded_paths:
+        - 'app/*'
+        - 'bin/*'
+        - 'tests/*'
+        - 'var/*'
+        - 'web/*'
