@@ -1,0 +1,78 @@
+{
+    "name": "etraxis/etraxis",
+    "description": "Issue tracking system with customizable workflows.",
+    "type": "project",
+    "license": "GPL-3.0",
+    "support": {
+        "forum"  : "https://gitter.im/etraxis",
+        "issues" : "https://github.com/etraxis/etraxis/issues",
+        "wiki"   : "https://github.com/etraxis/etraxis/wiki",
+        "source" : "https://github.com/etraxis/etraxis"
+    },
+    "require": {
+        "php"                                  : ">=7.0",
+        "symfony/symfony"                      : "3.3.*",
+        "symfony/polyfill-apcu"                : "^1.0",
+        "symfony/monolog-bundle"               : "^3.1",
+        "symfony/swiftmailer-bundle"           : "^2.3.10",
+        "sensio/framework-extra-bundle"        : "^3.0.2",
+        "sensio/distribution-bundle"           : "^5.0.19",
+        "incenteev/composer-parameter-handler" : "^2.0",
+        "twig/twig"                            : "^1.0||^2.0",
+        "doctrine/orm"                         : "^2.5",
+        "doctrine/doctrine-bundle"             : "^1.6"
+    },
+    "require-dev": {
+        "symfony/phpunit-bridge"               : "^3.0",
+        "sensio/generator-bundle"              : "^3.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "AppBundle\\" : "src/AppBundle",
+            "eTraxis\\"   : "src/eTraxis"
+        },
+        "classmap": [
+            "app/AppKernel.php",
+            "app/AppCache.php"
+        ]
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "AppBundle\\" : "tests/AppBundle",
+            "eTraxis\\"   : "tests/eTraxis"
+        },
+        "files": [
+            "vendor/symfony/symfony/src/Symfony/Component/VarDumper/Resources/functions/dump.php"
+        ]
+    },
+    "scripts": {
+        "symfony-scripts": [
+            "Incenteev\\ParameterHandler\\ScriptHandler::buildParameters",
+            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::buildBootstrap",
+            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::clearCache",
+            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installRequirementsFile",
+            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::prepareDeploymentTarget"
+        ],
+        "post-install-cmd": [
+            "@symfony-scripts"
+        ],
+        "post-update-cmd": [
+            "@symfony-scripts"
+        ]
+    },
+    "config": {
+        "sort-packages": false
+    },
+    "extra": {
+        "symfony-app-dir": "app",
+        "symfony-bin-dir": "bin",
+        "symfony-var-dir": "var",
+        "symfony-web-dir": "web",
+        "symfony-tests-dir": "tests",
+        "symfony-assets-install": "relative",
+        "incenteev-parameters": {
+            "file": "app/config/parameters.yml"
+        },
+        "branch-alias": null
+    }
+}

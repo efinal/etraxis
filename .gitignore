@@ -1,0 +1,8 @@
+/app/config/parameters.yml
+/var/*
+!var/SymfonyRequirements.php
+/vendor/
+/web/bundles/
+/.web-server-pid
+/composer.phar
+/phpunit.xml
