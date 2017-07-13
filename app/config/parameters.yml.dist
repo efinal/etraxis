@@ -12,5 +12,9 @@ parameters:
     mailer_encryption:  ~
     mailer_user:        ~
     mailer_password:    ~
+    mailer_delivery:    ~
+
+    mailfrom_address:   etraxis@example.com
+    mailfrom_name:      eTraxis
 
     secret:             ThisTokenIsNotSoSecretChangeIt

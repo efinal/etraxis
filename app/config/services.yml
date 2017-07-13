@@ -4,3 +4,11 @@ services:
         autowire: true
         autoconfigure: true
         public: false
+
+    eTraxis\Service\:
+        resource: '../../src/eTraxis/Service'
+
+    # Autowiring hints
+    eTraxis\Service\MailerService:
+        $address: '%mailfrom_address%'
+        $name:    '%mailfrom_name%'
