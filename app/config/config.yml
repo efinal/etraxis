@@ -27,6 +27,7 @@ framework:
     fragments: ~
     http_method_override: true
     assets: ~
+    web_link: true
     php_errors:
         log: true
 
