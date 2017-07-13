@@ -17,4 +17,6 @@ parameters:
     mailfrom_address:   etraxis@example.com
     mailfrom_name:      eTraxis
 
+    locale:             en
+
     secret:             ThisTokenIsNotSoSecretChangeIt
