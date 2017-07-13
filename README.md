@@ -34,5 +34,6 @@ composer install
 ### Development
 
 ```bash
+./vendor/bin/php-cs-fixer fix
 ./vendor/bin/simple-phpunit --coverage-html=var/coverage
 ```

@@ -25,7 +25,8 @@
     },
     "require-dev": {
         "symfony/phpunit-bridge"               : "^3.0",
-        "sensio/generator-bundle"              : "^3.0"
+        "sensio/generator-bundle"              : "^3.0",
+        "friendsofphp/php-cs-fixer"            : "^2.3"
     },
     "autoload": {
         "psr-4": {
