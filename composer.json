@@ -27,6 +27,7 @@
     "require-dev": {
         "symfony/phpunit-bridge"               : "^3.0",
         "sensio/generator-bundle"              : "^3.0",
+        "composer/composer"                    : "^1.4",
         "friendsofphp/php-cs-fixer"            : "^2.3"
     },
     "autoload": {
@@ -51,6 +52,7 @@
     "scripts": {
         "symfony-scripts": [
             "Incenteev\\ParameterHandler\\ScriptHandler::buildParameters",
+            "eTraxis\\Composer\\ParameterHandler::updateSecret",
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::buildBootstrap",
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::clearCache",
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installRequirementsFile",
