@@ -13,16 +13,19 @@
 
 namespace AppBundle\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+use eTraxis\Tests\WebTestCase;
 use Symfony\Component\HttpFoundation\Request;
 
 class DefaultControllerTest extends WebTestCase
 {
     public function testIndexAction()
     {
-        $client = static::createClient();
-        $client->request(Request::METHOD_GET, '/');
+        $this->client->request(Request::METHOD_GET, '/');
+        self::assertTrue($this->client->getResponse()->isRedirect());
 
-        self::assertTrue($client->getResponse()->isOk());
+        $this->loginAs('admin@example.com');
+
+        $this->client->request(Request::METHOD_GET, '/');
+        self::assertTrue($this->client->getResponse()->isOk());
     }
 }

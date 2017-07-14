@@ -13,7 +13,10 @@
 
 namespace eTraxis\Tests;
 
+use eTraxis\Entity\User;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase as SymfonyWebTestCase;
+use Symfony\Component\BrowserKit\Cookie;
+use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 
 /**
  * Extended web test case with an autoboot kernel and few helpers.
@@ -59,5 +62,36 @@ class WebTestCase extends SymfonyWebTestCase
         $this->client->request($method, $uri, $parameters, [], $headers);
 
         return $this->client->getResponse();
+    }
+
+    /**
+     * Emulates authentication of specified user.
+     *
+     * @param string $email Login.
+     *
+     * @return User|null Whether user was authenticated.
+     */
+    protected function loginAs(string $email)
+    {
+        /** @var \Symfony\Component\HttpFoundation\Session\SessionInterface $session */
+        $session = $this->client->getContainer()->get('session');
+
+        /** @var \Pignus\Model\UserRepositoryInterface $repository */
+        $repository = $this->client->getContainer()->get('doctrine')->getRepository(User::class);
+
+        /** @var User $user */
+        if ($user = $repository->findOneByUsername($email)) {
+
+            $token = new UsernamePasswordToken($user, null, 'main', $user->getRoles());
+            $this->client->getContainer()->get('security.token_storage')->setToken($token);
+
+            $session->set('_security_main', serialize($token));
+            $session->save();
+
+            $cookie = new Cookie($session->getName(), $session->getId());
+            $this->client->getCookieJar()->set($cookie);
+        }
+
+        return $user;
     }
 }

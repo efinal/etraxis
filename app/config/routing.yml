@@ -1,3 +1,6 @@
+pignus_login:
+    resource: '@PignusBundle/Resources/routing/login.yml'
+
 app:
     resource: '@AppBundle/Controller/'
     type:     annotation
