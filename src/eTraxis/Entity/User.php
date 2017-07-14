@@ -14,14 +14,16 @@
 namespace eTraxis\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Pignus\Model as Pignus;
 use Symfony\Bridge\Doctrine\Validator\Constraints as Assert;
+use Symfony\Component\Security\Core\User\AdvancedUserInterface;
 use Webinarium\PropertyTrait;
 
 /**
  * User.
  *
  * @ORM\Table(name="users")
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="eTraxis\Repository\UserRepository")
  * @Assert\UniqueEntity(fields={"email"}, message="user.conflict.email")
  *
  * @property-read int    $id
@@ -31,9 +33,14 @@ use Webinarium\PropertyTrait;
  * @property      string $description
  * @property      bool   $isAdmin
  */
-class User
+class User implements AdvancedUserInterface
 {
     use PropertyTrait;
+    use Pignus\UserTrait;
+    use Pignus\DisableAccountTrait;
+    use Pignus\ExpireAccountTrait;
+    use Pignus\ExpirePasswordTrait;
+    use Pignus\LockAccountTrait;
 
     // Roles.
     const ROLE_ADMIN = 'ROLE_ADMIN';
@@ -94,6 +101,30 @@ class User
     public function __construct()
     {
         $this->role = self::ROLE_USER;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getUsername()
+    {
+        return $this->email;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getPassword()
+    {
+        return $this->password;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getRoles()
+    {
+        return [$this->role];
     }
 
     /**

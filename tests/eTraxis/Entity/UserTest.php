@@ -25,6 +25,36 @@ class UserTest extends \PHPUnit_Framework_TestCase
         self::assertEquals('ROLE_USER', $this->getProperty($user, 'role'));
     }
 
+    public function testUsername()
+    {
+        $user = new User();
+        self::assertNotEquals('anna@example.com', $user->getUsername());
+
+        $user->email = 'anna@example.com';
+        self::assertEquals('anna@example.com', $user->getUsername());
+    }
+
+    public function testPassword()
+    {
+        $user = new User();
+        self::assertNotEquals('secret', $user->getPassword());
+
+        $user->password = 'secret';
+        self::assertEquals('secret', $user->getPassword());
+    }
+
+    public function testRoles()
+    {
+        $user = new User();
+        self::assertEquals(['ROLE_USER'], $user->getRoles());
+
+        $user->isAdmin = true;
+        self::assertEquals(['ROLE_ADMIN'], $user->getRoles());
+
+        $user->isAdmin = false;
+        self::assertEquals(['ROLE_USER'], $user->getRoles());
+    }
+
     public function testIsAdmin()
     {
         $user = new User();

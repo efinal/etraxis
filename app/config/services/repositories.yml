@@ -5,3 +5,8 @@ services:
         class: Doctrine\ORM\EntityRepository
         public: false
         factory: [ '@doctrine.orm.default_entity_manager', 'getRepository' ]
+
+    Pignus\Model\UserRepositoryInterface:
+        parent: abstract.repository
+        class: eTraxis\Repository\UserRepository
+        arguments: [ eTraxis\Entity\User ]

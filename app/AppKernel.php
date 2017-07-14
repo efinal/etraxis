@@ -32,6 +32,7 @@ class AppKernel extends Kernel
             new Doctrine\Bundle\MigrationsBundle\DoctrineMigrationsBundle(),
             new Doctrine\Bundle\FixturesBundle\DoctrineFixturesBundle(),
             new League\Tactician\Bundle\TacticianBundle(),
+            new Pignus\PignusBundle(),
             new AppBundle\AppBundle(),
         ];
 
