@@ -29,3 +29,6 @@ parameters:
     locale:             en_US
 
     secret:             ThisTokenIsNotSoSecretChangeIt
+
+    auth_failures:      ~
+    lock_duration:      ~

@@ -45,7 +45,7 @@ class GenericAuthenticatorTest extends TransactionalTestCase
         /** @var FirewallMap $firewall */
         $firewall = $this->createMock(FirewallMap::class);
 
-        $this->authenticator = new GenericAuthenticator($router, $session, $encoders, $firewall);
+        $this->authenticator = new GenericAuthenticator($router, $session, $encoders, $firewall, $this->commandbus);
     }
 
     public function testGetUser()
@@ -93,6 +93,35 @@ class GenericAuthenticatorTest extends TransactionalTestCase
         ];
 
         $this->authenticator->getUser($credentials, $provider);
+    }
+
+    public function testCheckCredentialsValid()
+    {
+        /** @var \Pignus\Model\UserRepositoryInterface $repository */
+        $repository = $this->doctrine->getRepository(User::class);
+        $user       = $repository->findOneByUsername('artem@example.com');
+
+        $credentials = [
+            'username' => 'artem@example.com',
+            'password' => 'secret',
+        ];
+
+        self::assertTrue($this->authenticator->checkCredentials($credentials, $user));
+    }
+
+    /** @expectedException \Symfony\Component\Security\Core\Exception\AuthenticationException */
+    public function testCheckCredentialsWrong()
+    {
+        /** @var \Pignus\Model\UserRepositoryInterface $repository */
+        $repository = $this->doctrine->getRepository(User::class);
+        $user       = $repository->findOneByUsername('artem@example.com');
+
+        $credentials = [
+            'username' => 'artem@example.com',
+            'password' => 'wrong',
+        ];
+
+        $this->authenticator->checkCredentials($credentials, $user);
     }
 
     public function testGetLoginUrl()

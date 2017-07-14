@@ -13,9 +13,16 @@
 
 namespace eTraxis\Security;
 
+use eTraxis\CommandBus\User\LockAccountCommand;
+use eTraxis\CommandBus\User\UnlockAccountCommand;
+use League\Tactician\CommandBus;
 use Pignus\Authenticator\AbstractAuthenticator;
+use Symfony\Bundle\SecurityBundle\Security\FirewallMap;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Routing\RouterInterface;
+use Symfony\Component\Security\Core\Encoder\EncoderFactoryInterface;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;
+use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\User\UserProviderInterface;
 
 /**
@@ -23,6 +30,29 @@ use Symfony\Component\Security\Core\User\UserProviderInterface;
  */
 class GenericAuthenticator extends AbstractAuthenticator
 {
+    protected $commandbus;
+
+    /**
+     * Dependency Injection constructor.
+     *
+     * @param RouterInterface         $router
+     * @param SessionInterface        $session
+     * @param EncoderFactoryInterface $encoders
+     * @param FirewallMap             $firewalls
+     * @param CommandBus              $commandbus
+     */
+    public function __construct(
+        RouterInterface         $router,
+        SessionInterface        $session,
+        EncoderFactoryInterface $encoders,
+        FirewallMap             $firewalls,
+        CommandBus              $commandbus)
+    {
+        parent::__construct($router, $session, $encoders, $firewalls);
+
+        $this->commandbus = $commandbus;
+    }
+
     /**
      * {@inheritdoc}
      */
@@ -36,6 +66,34 @@ class GenericAuthenticator extends AbstractAuthenticator
         }
 
         return $user;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function checkCredentials($credentials, UserInterface $user)
+    {
+        try {
+            parent::checkCredentials($credentials, $user);
+
+            $command = new UnlockAccountCommand([
+                'username' => $credentials['username'],
+            ]);
+
+            $this->commandbus->handle($command);
+        }
+        catch (AuthenticationException $e) {
+
+            $command = new LockAccountCommand([
+                'username' => $credentials['username'],
+            ]);
+
+            $this->commandbus->handle($command);
+
+            throw $e;
+        }
+
+        return true;
     }
 
     /**
