@@ -21,6 +21,9 @@
     <filter>
         <whitelist>
             <directory>src</directory>
+            <exclude>
+                <directory>src/AppBundle/DataFixtures</directory>
+            </exclude>
         </whitelist>
     </filter>
 </phpunit>
