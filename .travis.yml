@@ -8,6 +8,9 @@ env:
     - DB=mysql
     - DB=pgsql
 
+before_install:
+    - echo 'extension = ldap.so' >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
+
 install:
     - cp app/config/travis/parameters.$DB.yml app/config/parameters.yml
     - composer --no-interaction install

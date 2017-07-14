@@ -20,7 +20,9 @@ security:
             anonymous: ~
             logout:    ~
             guard:
+                entry_point: etraxis.authenticator.generic
                 authenticators:
+                    - etraxis.authenticator.ldap
                     - etraxis.authenticator.generic
 
     role_hierarchy:

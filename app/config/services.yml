@@ -8,6 +8,14 @@ services:
         autoconfigure: true
         public: false
 
+    Symfony\Component\Ldap\LdapInterface:
+        class: Symfony\Component\Ldap\LdapInterface
+        factory: [ eTraxis\Security\LdapAuthenticator, ldap ]
+        arguments:
+            $host:       '%ldap_host%'
+            $port:       '%ldap_port%'
+            $encryption: '%ldap_encryption%'
+
     eTraxis\Service\:
         resource: '../../src/eTraxis/Service'
 

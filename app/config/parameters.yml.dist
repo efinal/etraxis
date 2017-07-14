@@ -18,6 +18,14 @@ parameters:
     mailfrom_address:   etraxis@example.com
     mailfrom_name:      eTraxis
 
+    ldap_host:          ~
+    ldap_port:          ~
+    ldap_encryption:    ~
+    ldap_type:          ~
+    ldap_user:          ~
+    ldap_password:      ~
+    ldap_basedn:        ~
+
     locale:             en_US
 
     secret:             ThisTokenIsNotSoSecretChangeIt
