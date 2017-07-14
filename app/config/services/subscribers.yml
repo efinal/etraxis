@@ -7,3 +7,7 @@ services:
 
     eTraxis\EventSubscriber\:
         resource: '../../../src/eTraxis/EventSubscriber'
+
+    # Autowiring hints
+    eTraxis\EventSubscriber\StickyLocale:
+        $locale: '%locale%'

@@ -33,3 +33,7 @@ services:
     eTraxis\CommandBus\User\Handler\LockAccountHandler:
         $authFailures: '%auth_failures%'
         $lockDuration: '%lock_duration%'
+
+    # Autowiring hints
+    eTraxis\CommandBus\User\Handler\RegisterExternalAccountHandler:
+        $locale: '%locale%'

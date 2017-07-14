@@ -25,17 +25,20 @@ class RegisterExternalAccountHandler
 {
     protected $logger;
     protected $manager;
+    protected $locale;
 
     /**
      * Dependency Injection constructor.
      *
      * @param LoggerInterface        $logger
      * @param EntityManagerInterface $manager
+     * @param string                 $locale
      */
-    public function __construct(LoggerInterface $logger, EntityManagerInterface $manager)
+    public function __construct(LoggerInterface $logger, EntityManagerInterface $manager, string $locale)
     {
         $this->logger  = $logger;
         $this->manager = $manager;
+        $this->locale  = $locale;
     }
 
     /**
@@ -68,6 +71,8 @@ class RegisterExternalAccountHandler
             $this->logger->info('Register external account.', [$command->email, $command->fullname]);
 
             $user = new User();
+
+            $user->locale = $this->locale;
         }
         // The account already exists - update it.
         else {

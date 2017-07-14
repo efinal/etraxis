@@ -15,6 +15,7 @@ namespace eTraxis\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use eTraxis\Dictionary\AccountProvider;
+use eTraxis\Dictionary\Locale;
 use eTraxis\Security\ExternalAccountTrait;
 use Pignus\Model as Pignus;
 use Ramsey\Uuid\Uuid;
@@ -40,6 +41,7 @@ use Webinarium\PropertyTrait;
  * @property      string $fullname
  * @property      string $description
  * @property      bool   $isAdmin
+ * @property      string $locale
  */
 class User implements AdvancedUserInterface, EncoderAwareInterface
 {
@@ -105,6 +107,13 @@ class User implements AdvancedUserInterface, EncoderAwareInterface
     protected $role;
 
     /**
+     * @var array User's settings.
+     *
+     * @ORM\Column(name="settings", type="json_array", nullable=true)
+     */
+    protected $settings;
+
+    /**
      * Sets default values to required fields.
      */
     public function __construct()
@@ -165,6 +174,10 @@ class User implements AdvancedUserInterface, EncoderAwareInterface
             'isAdmin' => function () {
                 return $this->role === self::ROLE_ADMIN;
             },
+
+            'locale' => function () {
+                return $this->settings['locale'] ?? Locale::FALLBACK;
+            },
         ];
     }
 
@@ -177,6 +190,12 @@ class User implements AdvancedUserInterface, EncoderAwareInterface
 
             'isAdmin' => function (bool $value) {
                 $this->role = $value ? self::ROLE_ADMIN : self::ROLE_USER;
+            },
+
+            'locale' => function (string $value) {
+                if (Locale::has($value)) {
+                    $this->settings['locale'] = $value;
+                }
             },
         ];
     }

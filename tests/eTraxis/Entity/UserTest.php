@@ -84,6 +84,18 @@ class UserTest extends \PHPUnit_Framework_TestCase
         self::assertFalse($user->isAdmin);
     }
 
+    public function testLocale()
+    {
+        $user = new User();
+        self::assertEquals('en_US', $user->locale);
+
+        $user->locale = 'ru';
+        self::assertEquals('ru', $user->locale);
+
+        $user->locale = 'xx';
+        self::assertEquals('ru', $user->locale);
+    }
+
     public function testCanPasswordBeExpired()
     {
         $user = new User();
