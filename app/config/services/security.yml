@@ -4,6 +4,11 @@ services:
         parent: pignus.provider.abstract
         autowire: true
 
+    etraxis.authenticator.generic:
+        parent: pignus.authenticator.abstract
+        class: eTraxis\Security\GenericAuthenticator
+        autowire: true
+
     # @todo Remove in 4.1
     eTraxis\Security\Md5PasswordEncoder:
         public: false

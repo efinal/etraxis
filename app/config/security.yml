@@ -17,9 +17,11 @@ security:
             security: false
 
         main:
-            anonymous:  ~
-            form_login: ~
-            logout:     ~
+            anonymous: ~
+            logout:    ~
+            guard:
+                authenticators:
+                    - etraxis.authenticator.generic
 
     role_hierarchy:
         ROLE_ADMIN: ROLE_USER
