@@ -24,6 +24,8 @@
         "doctrine/doctrine-bundle"             : "^1.6",
         "doctrine/doctrine-migrations-bundle"  : "^1.2",
         "doctrine/doctrine-fixtures-bundle"    : "^2.3",
+        "league/tactician-bundle"              : "~0.4",
+        "league/tactician-doctrine"            : "^1.1",
         "ramsey/uuid"                          : "^3.6",
         "webinarium/php-dictionary"            : "^1.1",
         "roave/security-advisories"            : "dev-master"

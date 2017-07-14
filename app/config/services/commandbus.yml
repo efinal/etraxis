@@ -1,0 +1,8 @@
+services:
+
+    _defaults:
+        autowire: true
+        public: true
+
+    # Alias for autowiring
+    League\Tactician\CommandBus: '@tactician.commandbus'
