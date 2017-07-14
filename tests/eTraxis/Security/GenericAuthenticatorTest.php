@@ -13,8 +13,10 @@
 
 namespace eTraxis\Security;
 
+use eTraxis\Entity\User;
 use eTraxis\Tests\ReflectionTrait;
 use eTraxis\Tests\TransactionalTestCase;
+use Pignus\Provider\GenericUserProvider;
 use Symfony\Bundle\SecurityBundle\Security\FirewallMap;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Routing\RouterInterface;
@@ -44,6 +46,53 @@ class GenericAuthenticatorTest extends TransactionalTestCase
         $firewall = $this->createMock(FirewallMap::class);
 
         $this->authenticator = new GenericAuthenticator($router, $session, $encoders, $firewall);
+    }
+
+    public function testGetUser()
+    {
+        /** @var \Pignus\Model\UserRepositoryInterface $repository */
+        $repository = $this->doctrine->getRepository(User::class);
+        $provider   = new GenericUserProvider($repository);
+
+        $credentials = [
+            'username' => 'artem@example.com',
+            'password' => 'secret',
+        ];
+
+        $user = $this->authenticator->getUser($credentials, $provider);
+
+        self::assertInstanceOf(User::class, $user);
+        self::assertEquals('artem@example.com', $user->getUsername());
+    }
+
+    /** @expectedException \Symfony\Component\Security\Core\Exception\AuthenticationException */
+    public function testGetUnknownUser()
+    {
+        /** @var \Pignus\Model\UserRepositoryInterface $repository */
+        $repository = $this->doctrine->getRepository(User::class);
+        $provider   = new GenericUserProvider($repository);
+
+        $credentials = [
+            'username' => '404@example.com',
+            'password' => 'secret',
+        ];
+
+        $this->authenticator->getUser($credentials, $provider);
+    }
+
+    /** @expectedException \Symfony\Component\Security\Core\Exception\AuthenticationException */
+    public function testGetExternalUser()
+    {
+        /** @var \Pignus\Model\UserRepositoryInterface $repository */
+        $repository = $this->doctrine->getRepository(User::class);
+        $provider   = new GenericUserProvider($repository);
+
+        $credentials = [
+            'username' => 'einstein@ldap.forumsys.com',
+            'password' => 'secret',
+        ];
+
+        $this->authenticator->getUser($credentials, $provider);
     }
 
     public function testGetLoginUrl()

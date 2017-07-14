@@ -13,6 +13,7 @@
 
 namespace eTraxis\Entity;
 
+use eTraxis\Dictionary\AccountProvider;
 use eTraxis\Tests\ReflectionTrait;
 
 class UserTest extends \PHPUnit_Framework_TestCase
@@ -23,6 +24,8 @@ class UserTest extends \PHPUnit_Framework_TestCase
     {
         $user = new User();
         self::assertEquals('ROLE_USER', $this->getProperty($user, 'role'));
+        self::assertEquals(AccountProvider::ETRAXIS, $user->getAccountProvider());
+        self::assertRegExp('/^([[:xdigit:]]{32})$/is', $user->getAccountUid());
     }
 
     public function testUsername()
@@ -79,5 +82,29 @@ class UserTest extends \PHPUnit_Framework_TestCase
 
         $user->isAdmin = false;
         self::assertFalse($user->isAdmin);
+    }
+
+    public function testCanPasswordBeExpired()
+    {
+        $user = new User();
+        self::assertTrue($this->callMethod($user, 'canPasswordBeExpired'));
+
+        $user->setAccountProvider(AccountProvider::LDAP);
+        self::assertFalse($this->callMethod($user, 'canPasswordBeExpired'));
+
+        $user->setAccountProvider(AccountProvider::ETRAXIS);
+        self::assertTrue($this->callMethod($user, 'canPasswordBeExpired'));
+    }
+
+    public function testCanAccountBeLocked()
+    {
+        $user = new User();
+        self::assertTrue($this->callMethod($user, 'canAccountBeLocked'));
+
+        $user->setAccountProvider(AccountProvider::LDAP);
+        self::assertFalse($this->callMethod($user, 'canAccountBeLocked'));
+
+        $user->setAccountProvider(AccountProvider::ETRAXIS);
+        self::assertTrue($this->callMethod($user, 'canAccountBeLocked'));
     }
 }

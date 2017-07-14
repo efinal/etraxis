@@ -15,12 +15,29 @@ namespace eTraxis\Security;
 
 use Pignus\Authenticator\AbstractAuthenticator;
 use Symfony\Component\Routing\RouterInterface;
+use Symfony\Component\Security\Core\Exception\AuthenticationException;
+use Symfony\Component\Security\Core\User\UserProviderInterface;
 
 /**
  * Authenticates user against the database.
  */
 class GenericAuthenticator extends AbstractAuthenticator
 {
+    /**
+     * {@inheritdoc}
+     */
+    public function getUser($credentials, UserProviderInterface $userProvider)
+    {
+        /** @var \eTraxis\Entity\User $user */
+        $user = parent::getUser($credentials, $userProvider);
+
+        if ($user->isAccountExternal()) {
+            throw new AuthenticationException('Bad credentials.');
+        }
+
+        return $user;
+    }
+
     /**
      * {@inheritdoc}
      */

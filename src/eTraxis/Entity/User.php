@@ -14,7 +14,10 @@
 namespace eTraxis\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use eTraxis\Dictionary\AccountProvider;
+use eTraxis\Security\ExternalAccountTrait;
 use Pignus\Model as Pignus;
+use Ramsey\Uuid\Uuid;
 use Symfony\Bridge\Doctrine\Validator\Constraints as Assert;
 use Symfony\Component\Security\Core\Encoder\EncoderAwareInterface;
 use Symfony\Component\Security\Core\User\AdvancedUserInterface;
@@ -23,7 +26,11 @@ use Webinarium\PropertyTrait;
 /**
  * User.
  *
- * @ORM\Table(name="users")
+ * @ORM\Table(
+ *     name="users",
+ *     uniqueConstraints={
+ *         @ORM\UniqueConstraint(columns={"account_provider", "account_uid"})
+ *     })
  * @ORM\Entity(repositoryClass="eTraxis\Repository\UserRepository")
  * @Assert\UniqueEntity(fields={"email"}, message="user.conflict.email")
  *
@@ -38,6 +45,7 @@ class User implements AdvancedUserInterface, EncoderAwareInterface
 {
     use PropertyTrait;
     use Pignus\UserTrait;
+    use ExternalAccountTrait;
     use Pignus\DisableAccountTrait;
     use Pignus\ExpireAccountTrait;
     use Pignus\ExpirePasswordTrait;
@@ -101,7 +109,9 @@ class User implements AdvancedUserInterface, EncoderAwareInterface
      */
     public function __construct()
     {
-        $this->role = self::ROLE_USER;
+        $this->role            = self::ROLE_USER;
+        $this->accountProvider = AccountProvider::ETRAXIS;
+        $this->accountUid      = Uuid::uuid4()->getHex();
     }
 
     /**
@@ -169,5 +179,21 @@ class User implements AdvancedUserInterface, EncoderAwareInterface
                 $this->role = $value ? self::ROLE_ADMIN : self::ROLE_USER;
             },
         ];
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    protected function canPasswordBeExpired(): bool
+    {
+        return !$this->isAccountExternal();
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    protected function canAccountBeLocked(): bool
+    {
+        return !$this->isAccountExternal();
     }
 }
