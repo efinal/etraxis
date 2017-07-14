@@ -1,0 +1,2 @@
+error.not_authorized: 'Sie sind nicht berechtigt, auf diese Seite zuzugreifen.'
+error.not_found: 'Anhang existiert nicht oder ist gelöscht worden.'

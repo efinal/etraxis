@@ -1,0 +1,2 @@
+error.not_authorized: 'Nu sunteți autorizat sa accesați această pagină.'
+error.not_found: 'Pagina pe care doriți să o accesați nu există sau a fost ștearsă.'

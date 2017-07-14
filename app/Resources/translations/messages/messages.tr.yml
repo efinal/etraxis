@@ -1,0 +1,2 @@
+error.not_authorized: 'Bu sayfaya erişme yetkiniz yok.'
+error.not_found: 'Erişmek istediğiniz sayfa mevcut değil ya da kaldırılmış.'

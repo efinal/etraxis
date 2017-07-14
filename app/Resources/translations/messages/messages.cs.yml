@@ -1,0 +1,2 @@
+error.not_authorized: 'Nemáte dostatečná práva pro zobrazení této stránky.'
+error.not_found: 'Stránka, kterou se snažíte zobrazit, neexistuje nebo byla smazána.'

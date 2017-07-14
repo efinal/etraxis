@@ -1,0 +1,2 @@
+error.not_authorized: このページのアクセスは許可されていません。
+error.not_found: アクセスしようとしたページは存在しないか削除されています。

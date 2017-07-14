@@ -1,0 +1,2 @@
+error.not_authorized: 'Nie posiadasz autoryzacji do oglądania tej strony.'
+error.not_found: 'Strona do której próbujesz się dostać nie istnieje lub została usunięta.'

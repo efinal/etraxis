@@ -1,0 +1,2 @@
+error.not_authorized: 'Você não está autorizado a acessar esta página.'
+error.not_found: 'A página que você está tentando acessar não existe ou foi excluída.'

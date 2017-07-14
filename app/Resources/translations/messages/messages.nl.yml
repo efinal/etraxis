@@ -1,0 +1,2 @@
+error.not_authorized: 'U heeft niet de juiste machtigingen om deze pagina te raadplegen.'
+error.not_found: 'De pagina, die u probeerde te benaderen, bestaat niet of is verwijderd.'

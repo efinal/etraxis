@@ -1,0 +1,2 @@
+error.not_authorized: 'Nincs hozzáférési engedélye ehhez az oldalhoz.'
+error.not_found: 'Az oldal, amit meg szeretne nézni nem található, vagy átkerült egy másik helyre.'
