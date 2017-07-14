@@ -3,3 +3,11 @@ services:
     etraxis.provider.generic:
         parent: pignus.provider.abstract
         autowire: true
+
+    # @todo Remove in 4.1
+    eTraxis\Security\Md5PasswordEncoder:
+        public: false
+
+    # @todo Remove in 4.1
+    eTraxis\Security\Sha1PasswordEncoder:
+        public: false

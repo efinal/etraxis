@@ -55,6 +55,20 @@ class UserTest extends \PHPUnit_Framework_TestCase
         self::assertEquals(['ROLE_USER'], $user->getRoles());
     }
 
+    public function testEncoderName()
+    {
+        $user = new User();
+
+        $user->password = '8dbdda48fb8748d6746f1965824e966a';
+        self::assertEquals('legacy.md5', $user->getEncoderName());
+
+        $user->password = 'mzMEbtOdGC462vqQRa1nh9S7wyE=';
+        self::assertEquals('legacy.sha1', $user->getEncoderName());
+
+        $user->password = 'secret';
+        self::assertNull($user->getEncoderName());
+    }
+
     public function testIsAdmin()
     {
         $user = new User();
