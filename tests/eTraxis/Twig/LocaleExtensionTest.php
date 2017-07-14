@@ -19,6 +19,7 @@ class LocaleExtensionTest extends \PHPUnit_Framework_TestCase
     {
         $expected = [
             'direction',
+            'language',
         ];
 
         $extension = new LocaleExtension();
@@ -38,5 +39,12 @@ class LocaleExtensionTest extends \PHPUnit_Framework_TestCase
         self::assertEquals(LocaleExtension::RIGHT_TO_LEFT, $extension->filterDirection('ar'));
         self::assertEquals(LocaleExtension::RIGHT_TO_LEFT, $extension->filterDirection('fa'));
         self::assertEquals(LocaleExtension::RIGHT_TO_LEFT, $extension->filterDirection('he'));
+    }
+
+    public function testFilterLanguage()
+    {
+        $extension = new LocaleExtension();
+
+        self::assertEquals('Русский', $extension->filterLanguage('ru'));
     }
 }

@@ -23,6 +23,7 @@
         "doctrine/orm"                         : "^2.5",
         "doctrine/doctrine-bundle"             : "^1.6",
         "ramsey/uuid"                          : "^3.6",
+        "webinarium/php-dictionary"            : "^1.1",
         "roave/security-advisories"            : "dev-master"
     },
     "require-dev": {

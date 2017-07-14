@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "01ad37b5e1d884f1d01b6e5f96763eb9",
+    "content-hash": "2dcf741fdc89a144cb09292768a1e73a",
     "packages": [
         {
             "name": "composer/ca-bundle",
@@ -2581,6 +2581,44 @@
                 "templating"
             ],
             "time": "2017-06-07T18:47:58+00:00"
+        },
+        {
+            "name": "webinarium/php-dictionary",
+            "version": "1.1.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/webinarium/php-dictionary.git",
+                "reference": "f98ca023be9e151a4e9bdc0c6165afabb607e621"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/webinarium/php-dictionary/zipball/f98ca023be9e151a4e9bdc0c6165afabb607e621",
+                "reference": "f98ca023be9e151a4e9bdc0c6165afabb607e621",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.6"
+            },
+            "require-dev": {
+                "friendsofphp/php-cs-fixer": "^2.1",
+                "phpunit/phpunit": "^5.4"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Dictionary\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "Static dictionary implementation for PHP",
+            "homepage": "https://github.com/webinarium/php-dictionary",
+            "keywords": [
+                "dictionary"
+            ],
+            "time": "2017-03-23T21:00:26+00:00"
         }
     ],
     "packages-dev": [

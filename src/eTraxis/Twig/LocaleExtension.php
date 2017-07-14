@@ -13,6 +13,8 @@
 
 namespace eTraxis\Twig;
 
+use eTraxis\Dictionary\Locale;
+
 /**
  * Twig extension for user locale.
  */
@@ -35,6 +37,7 @@ class LocaleExtension extends \Twig_Extension
 
         return [
             new \Twig_SimpleFilter('direction', [$this, 'filterDirection'], $options),
+            new \Twig_SimpleFilter('language', [$this, 'filterLanguage'], $options),
         ];
     }
 
@@ -50,5 +53,17 @@ class LocaleExtension extends \Twig_Extension
         $rtl = ['ar', 'fa', 'he'];
 
         return in_array(mb_substr($locale, 0, 2), $rtl, true) ? self::RIGHT_TO_LEFT : self::LEFT_TO_RIGHT;
+    }
+
+    /**
+     * Returns translated language name for specified locale.
+     *
+     * @param string $locale
+     *
+     * @return string|null
+     */
+    public function filterLanguage(string $locale)
+    {
+        return Locale::has($locale) ? Locale::get($locale) : null;
     }
 }
