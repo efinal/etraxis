@@ -17,9 +17,13 @@ use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 use eTraxis\Entity\User;
+use Symfony\Component\DependencyInjection\ContainerAwareInterface;
+use Symfony\Component\DependencyInjection\ContainerAwareTrait;
 
-class LoadUsersData extends AbstractFixture implements OrderedFixtureInterface
+class LoadUsersData extends AbstractFixture implements ContainerAwareInterface, OrderedFixtureInterface
 {
+    use ContainerAwareTrait;
+
     /**
      * {@inheritdoc}
      */
@@ -33,10 +37,13 @@ class LoadUsersData extends AbstractFixture implements OrderedFixtureInterface
      */
     public function load(ObjectManager $manager)
     {
+        /** @var \Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface $encoder */
+        $encoder = $this->container->get('security.password_encoder');
+
         $user = new User();
 
         $user->email       = 'admin@example.com';
-        $user->password    = 'secret';
+        $user->password    = $encoder->encodePassword($user, 'secret');
         $user->fullname    = 'eTraxis Admin';
         $user->description = 'Built-in administrator';
         $user->isAdmin     = true;

@@ -68,9 +68,9 @@ class User implements AdvancedUserInterface
     protected $email;
 
     /**
-     * @var string User's password.
+     * @var string User's password (hash).
      *
-     * @ORM\Column(name="password", type="string", length=32, nullable=true)
+     * @ORM\Column(name="password", type="string", length=60, nullable=true)
      */
     protected $password;
 
