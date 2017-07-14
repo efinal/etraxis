@@ -13,11 +13,13 @@
 
 namespace eTraxis\EventSubscriber;
 
+use League\Tactician\Bundle\Middleware\InvalidCommandException;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpKernel\Event\GetResponseForExceptionEvent;
 use Symfony\Component\HttpKernel\Exception\HttpException;
+use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 
 /**
  * Handles any unhandled exception.
@@ -25,15 +27,18 @@ use Symfony\Component\HttpKernel\Exception\HttpException;
 class UnhandledException implements EventSubscriberInterface
 {
     protected $logger;
+    protected $normalizer;
 
     /**
      * Dependency Injection constructor.
      *
-     * @param LoggerInterface $logger
+     * @param LoggerInterface     $logger
+     * @param NormalizerInterface $normalizer
      */
-    public function __construct(LoggerInterface $logger)
+    public function __construct(LoggerInterface $logger, NormalizerInterface $normalizer)
     {
-        $this->logger = $logger;
+        $this->logger     = $logger;
+        $this->normalizer = $normalizer;
     }
 
     /**
@@ -58,7 +63,13 @@ class UnhandledException implements EventSubscriberInterface
 
         if ($request->isXmlHttpRequest()) {
 
-            if ($exception instanceof HttpException) {
+            if ($exception instanceof InvalidCommandException) {
+                $violations = $this->normalizer->normalize($exception->getViolations());
+                $this->logger->critical('Validation exception', [$exception->getMessage(), $violations]);
+                $response = new JsonResponse($violations, JsonResponse::HTTP_BAD_REQUEST);
+                $event->setResponse($response);
+            }
+            elseif ($exception instanceof HttpException) {
                 $message = $exception->getMessage() ?: JsonResponse::$statusTexts[$exception->getStatusCode()];
                 $this->logger->error('HTTP exception', [$message]);
                 $response = new JsonResponse($message, $exception->getStatusCode());
