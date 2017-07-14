@@ -34,6 +34,7 @@ and more...
 composer install
 ./bin/console doctrine:database:create
 ./bin/console doctrine:schema:create
+./bin/console doctrine:fixtures:load
 ```
 
 ### Development
@@ -41,6 +42,7 @@ composer install
 ```bash
 ./bin/console --env=test --no-interaction doctrine:database:create
 ./bin/console --env=test --no-interaction doctrine:schema:create
+./bin/console --env=test --no-interaction doctrine:fixtures:load
 ./vendor/bin/php-cs-fixer fix
 ./vendor/bin/simple-phpunit --coverage-html=var/coverage
 ```
