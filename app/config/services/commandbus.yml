@@ -6,3 +6,8 @@ services:
 
     # Alias for autowiring
     League\Tactician\CommandBus: '@tactician.commandbus'
+
+    # Custom middleware
+    tactician.middleware.timing:
+        class: eTraxis\CommandBus\TimingMiddleware
+        public: false
