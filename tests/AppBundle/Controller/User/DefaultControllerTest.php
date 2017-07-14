@@ -11,7 +11,7 @@
 //
 //----------------------------------------------------------------------
 
-namespace AppBundle\Controller;
+namespace AppBundle\Controller\User;
 
 use eTraxis\Tests\WebTestCase;
 use Symfony\Component\HttpFoundation\Request;
@@ -20,12 +20,14 @@ class DefaultControllerTest extends WebTestCase
 {
     public function testIndexAction()
     {
-        $this->client->request(Request::METHOD_GET, '/');
-        self::assertTrue($this->client->getResponse()->isRedirect());
+        $uri = '/';
 
-        $this->loginAs('admin@example.com');
+        $this->client->request(Request::METHOD_GET, $uri);
+        self::assertTrue($this->client->getResponse()->isRedirect('/login'));
 
-        $this->client->request(Request::METHOD_GET, '/');
+        $this->loginAs('artem@example.com');
+
+        $this->client->request(Request::METHOD_GET, $uri);
         self::assertTrue($this->client->getResponse()->isOk());
     }
 }

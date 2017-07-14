@@ -11,12 +11,15 @@
 //
 //----------------------------------------------------------------------
 
-namespace AppBundle\Controller;
+namespace AppBundle\Controller\User;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
 
+/**
+ * Default controller for public area.
+ */
 class DefaultController extends Controller
 {
     /**
@@ -26,6 +29,6 @@ class DefaultController extends Controller
      */
     public function indexAction(): Response
     {
-        return $this->render('base.html.twig');
+        return $this->render('user/base.html.twig');
     }
 }

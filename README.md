@@ -43,6 +43,7 @@ composer install
 ./bin/console --env=test --no-interaction doctrine:database:create
 ./bin/console --env=test --no-interaction doctrine:schema:create
 ./bin/console --env=test --no-interaction doctrine:fixtures:load
+./bin/console --env=test --no-interaction doctrine:fixtures:load --append --fixtures=src/AppBundle/DataFixtures/Tests
 ./vendor/bin/php-cs-fixer fix
 ./vendor/bin/simple-phpunit --coverage-html=var/coverage
 ```

@@ -1,6 +1,12 @@
 pignus_login:
     resource: '@PignusBundle/Resources/routing/login.yml'
 
-app:
-    resource: '@AppBundle/Controller/'
+user:
+    resource: '@AppBundle/Controller/User/'
     type:     annotation
+    prefix:   /
+
+admin:
+    resource: '@AppBundle/Controller/Admin/'
+    type:     annotation
+    prefix:   /admin
