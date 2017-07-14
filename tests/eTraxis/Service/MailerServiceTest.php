@@ -13,9 +13,9 @@
 
 namespace eTraxis\Service;
 
-use Psr\Log\NullLogger;
+use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
-class MailerServiceTest extends \PHPUnit_Framework_TestCase
+class MailerServiceTest extends WebTestCase
 {
     /** @var \Psr\Log\LoggerInterface */
     protected $logger;
@@ -28,18 +28,15 @@ class MailerServiceTest extends \PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
-        $this->logger = new NullLogger();
+        $client = static::createClient();
 
-        $loader     = new \Twig_Loader_Filesystem(getcwd() . DIRECTORY_SEPARATOR . 'app' . DIRECTORY_SEPARATOR . 'Resources' . DIRECTORY_SEPARATOR . 'views');
-        $this->twig = new \Twig_Environment($loader);
-
-        $transport    = new \Swift_NullTransport();
-        $this->mailer = new \Swift_Mailer($transport);
+        $this->logger = $client->getContainer()->get('logger');
+        $this->twig   = $client->getContainer()->get('twig');
+        $this->mailer = $client->getContainer()->get('mailer');
     }
 
     public function testFullSender()
     {
-        /** @noinspection PhpParamsInspection */
         $service = new MailerService($this->logger, $this->twig, $this->mailer, 'noreply@example.com', 'Test Mailer');
 
         $result = $service->send(
@@ -63,7 +60,6 @@ class MailerServiceTest extends \PHPUnit_Framework_TestCase
 
     public function testAddressOnlySender()
     {
-        /** @noinspection PhpParamsInspection */
         $service = new MailerService($this->logger, $this->twig, $this->mailer, 'noreply@example.com');
 
         $result = $service->send(
@@ -87,7 +83,6 @@ class MailerServiceTest extends \PHPUnit_Framework_TestCase
 
     public function testNoSender()
     {
-        /** @noinspection PhpParamsInspection */
         $service = new MailerService($this->logger, $this->twig, $this->mailer);
 
         $result = $service->send(
