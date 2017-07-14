@@ -37,3 +37,4 @@ services:
     # Autowiring hints
     eTraxis\CommandBus\User\Handler\RegisterExternalAccountHandler:
         $locale: '%locale%'
+        $theme:  '%theme%'

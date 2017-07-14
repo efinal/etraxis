@@ -23,6 +23,7 @@ class RegisterExternalAccountCommandTest extends TransactionalTestCase
     {
         $uid    = bin2hex(random_bytes(12));
         $locale = static::$kernel->getContainer()->getParameter('locale');
+        $theme  = static::$kernel->getContainer()->getParameter('theme');
 
         $repository = $this->doctrine->getRepository(User::class);
 
@@ -52,6 +53,7 @@ class RegisterExternalAccountCommandTest extends TransactionalTestCase
         self::assertEquals('earlene.gibson@example.com', $user->email);
         self::assertEquals('Earlene Gibson', $user->fullname);
         self::assertEquals($locale, $user->locale);
+        self::assertEquals($theme, $user->theme);
 
         $id = $user->id;
 
@@ -75,6 +77,7 @@ class RegisterExternalAccountCommandTest extends TransactionalTestCase
         self::assertEquals('earlene.doyle@example.com', $user->email);
         self::assertEquals('Earlene Doyle', $user->fullname);
         self::assertEquals($locale, $user->locale);
+        self::assertEquals($theme, $user->theme);
     }
 
     /**

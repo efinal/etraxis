@@ -96,6 +96,18 @@ class UserTest extends \PHPUnit_Framework_TestCase
         self::assertEquals('ru', $user->locale);
     }
 
+    public function testTheme()
+    {
+        $user = new User();
+        self::assertEquals('azure', $user->theme);
+
+        $user->theme = 'emerald';
+        self::assertEquals('emerald', $user->theme);
+
+        $user->theme = 'unknown';
+        self::assertEquals('emerald', $user->theme);
+    }
+
     public function testCanPasswordBeExpired()
     {
         $user = new User();

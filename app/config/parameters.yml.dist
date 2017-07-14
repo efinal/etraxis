@@ -27,6 +27,7 @@ parameters:
     ldap_basedn:        ~
 
     locale:             en_US
+    theme:              azure
 
     secret:             ThisTokenIsNotSoSecretChangeIt
 

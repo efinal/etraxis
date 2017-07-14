@@ -16,6 +16,7 @@ namespace eTraxis\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use eTraxis\Dictionary\AccountProvider;
 use eTraxis\Dictionary\Locale;
+use eTraxis\Dictionary\Theme;
 use eTraxis\Security\ExternalAccountTrait;
 use Pignus\Model as Pignus;
 use Ramsey\Uuid\Uuid;
@@ -42,6 +43,7 @@ use Webinarium\PropertyTrait;
  * @property      string $description
  * @property      bool   $isAdmin
  * @property      string $locale
+ * @property      string $theme
  */
 class User implements AdvancedUserInterface, EncoderAwareInterface
 {
@@ -178,6 +180,10 @@ class User implements AdvancedUserInterface, EncoderAwareInterface
             'locale' => function () {
                 return $this->settings['locale'] ?? Locale::FALLBACK;
             },
+
+            'theme' => function () {
+                return $this->settings['theme'] ?? Theme::FALLBACK;
+            },
         ];
     }
 
@@ -195,6 +201,12 @@ class User implements AdvancedUserInterface, EncoderAwareInterface
             'locale' => function (string $value) {
                 if (Locale::has($value)) {
                     $this->settings['locale'] = $value;
+                }
+            },
+
+            'theme' => function (string $value) {
+                if (Theme::has($value)) {
+                    $this->settings['theme'] = $value;
                 }
             },
         ];

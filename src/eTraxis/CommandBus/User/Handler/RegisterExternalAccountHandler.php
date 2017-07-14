@@ -26,6 +26,7 @@ class RegisterExternalAccountHandler
     protected $logger;
     protected $manager;
     protected $locale;
+    protected $theme;
 
     /**
      * Dependency Injection constructor.
@@ -33,12 +34,14 @@ class RegisterExternalAccountHandler
      * @param LoggerInterface        $logger
      * @param EntityManagerInterface $manager
      * @param string                 $locale
+     * @param string                 $theme
      */
-    public function __construct(LoggerInterface $logger, EntityManagerInterface $manager, string $locale)
+    public function __construct(LoggerInterface $logger, EntityManagerInterface $manager, string $locale, string $theme)
     {
         $this->logger  = $logger;
         $this->manager = $manager;
         $this->locale  = $locale;
+        $this->theme   = $theme;
     }
 
     /**
@@ -73,6 +76,7 @@ class RegisterExternalAccountHandler
             $user = new User();
 
             $user->locale = $this->locale;
+            $user->theme  = $this->theme;
         }
         // The account already exists - update it.
         else {

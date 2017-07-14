@@ -34,6 +34,7 @@ twig:
     strict_variables: '%kernel.debug%'
     globals:
         locale: '%locale%'
+        theme:  '%theme%'
 
 # Doctrine Configuration
 doctrine:
