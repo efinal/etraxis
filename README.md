@@ -32,11 +32,15 @@ and more...
 
 ```bash
 composer install
+./bin/console doctrine:database:create
+./bin/console doctrine:schema:create
 ```
 
 ### Development
 
 ```bash
+./bin/console --env=test --no-interaction doctrine:database:create
+./bin/console --env=test --no-interaction doctrine:schema:create
 ./vendor/bin/php-cs-fixer fix
 ./vendor/bin/simple-phpunit --coverage-html=var/coverage
 ```

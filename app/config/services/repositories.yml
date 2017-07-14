@@ -1,0 +1,7 @@
+# Keep repositories sorted alphabetically.
+services:
+
+    abstract.repository:
+        class: Doctrine\ORM\EntityRepository
+        public: false
+        factory: [ '@doctrine.orm.default_entity_manager', 'getRepository' ]

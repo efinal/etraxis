@@ -7,6 +7,10 @@ php:
 install:
     - composer --no-interaction install
 
+before_script:
+    - ./bin/console --env=test --no-interaction doctrine:database:create
+    - ./bin/console --env=test --no-interaction doctrine:schema:create
+
 script:
     - ./vendor/bin/simple-phpunit --coverage-clover=coverage.clover
     - wget https://scrutinizer-ci.com/ocular.phar
