@@ -17,6 +17,7 @@ use Doctrine\ORM\Mapping as ORM;
 use eTraxis\Dictionary\AccountProvider;
 use eTraxis\Dictionary\Locale;
 use eTraxis\Dictionary\Theme;
+use eTraxis\Dictionary\Timezone;
 use eTraxis\Security\ExternalAccountTrait;
 use Pignus\Model as Pignus;
 use Ramsey\Uuid\Uuid;
@@ -44,6 +45,7 @@ use Webinarium\PropertyTrait;
  * @property      bool   $isAdmin
  * @property      string $locale
  * @property      string $theme
+ * @property      string $timezone
  */
 class User implements AdvancedUserInterface, EncoderAwareInterface
 {
@@ -184,6 +186,10 @@ class User implements AdvancedUserInterface, EncoderAwareInterface
             'theme' => function () {
                 return $this->settings['theme'] ?? Theme::FALLBACK;
             },
+
+            'timezone' => function () {
+                return $this->settings['timezone'] ?? Timezone::FALLBACK;
+            },
         ];
     }
 
@@ -207,6 +213,12 @@ class User implements AdvancedUserInterface, EncoderAwareInterface
             'theme' => function (string $value) {
                 if (Theme::has($value)) {
                     $this->settings['theme'] = $value;
+                }
+            },
+
+            'timezone' => function (string $value) {
+                if (Timezone::has($value)) {
+                    $this->settings['timezone'] = $value;
                 }
             },
         ];

@@ -108,6 +108,18 @@ class UserTest extends \PHPUnit_Framework_TestCase
         self::assertEquals('emerald', $user->theme);
     }
 
+    public function testTimezone()
+    {
+        $user = new User();
+        self::assertEquals('UTC', $user->timezone);
+
+        $user->timezone = 'Pacific/Auckland';
+        self::assertEquals('Pacific/Auckland', $user->timezone);
+
+        $user->timezone = 'Unknown';
+        self::assertEquals('Pacific/Auckland', $user->timezone);
+    }
+
     public function testCanPasswordBeExpired()
     {
         $user = new User();
