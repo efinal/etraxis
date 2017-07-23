@@ -90,7 +90,8 @@ class UnhandledExceptionTest extends \PHPUnit_Framework_TestCase
             ],
             new DummyCommand(['property' => 0]),
             'property',
-            '0'));
+            '0'
+        ));
 
         $event = new GetResponseForExceptionEvent(
             $kernel,

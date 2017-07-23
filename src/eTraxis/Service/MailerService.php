@@ -42,7 +42,8 @@ class MailerService
         Twig_Environment $twig,
         Swift_Mailer     $mailer,
         string           $address = null,
-        string           $name    = null)
+        string           $name    = null
+    )
     {
         $this->logger        = $logger;
         $this->twig          = $twig;

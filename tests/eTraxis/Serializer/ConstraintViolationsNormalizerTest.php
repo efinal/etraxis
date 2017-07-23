@@ -33,7 +33,8 @@ class ConstraintViolationsNormalizerTest extends \PHPUnit_Framework_TestCase
             ],
             new DummyCommand(['property' => 0]),
             'property',
-            '0'));
+            '0'
+        ));
 
         $expected = [
             [

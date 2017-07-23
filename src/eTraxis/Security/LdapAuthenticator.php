@@ -66,7 +66,8 @@ class LdapAuthenticator extends AbstractAuthenticator
         string                  $type     = null,
         string                  $user     = null,
         string                  $password = null,
-        string                  $basedn   = null)
+        string                  $basedn   = null
+    )
     {
         parent::__construct($router, $session, $encoders, $firewalls);
 
@@ -85,7 +86,7 @@ class LdapAuthenticator extends AbstractAuthenticator
      * @param string $port
      * @param string $encryption
      *
-     * @return LdapInterface|null
+     * @return null|LdapInterface
      */
     public static function ldap(string $host = null, string $port = null, string $encryption = null)
     {

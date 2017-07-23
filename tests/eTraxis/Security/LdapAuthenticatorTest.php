@@ -137,7 +137,8 @@ class LdapAuthenticatorTest extends TransactionalTestCase
             $this->encoders,
             $this->firewall,
             $this->commandbus,
-            $ldap);
+            $ldap
+        );
 
         $count = count($this->repository->findAll());
 
@@ -187,7 +188,8 @@ class LdapAuthenticatorTest extends TransactionalTestCase
             $this->encoders,
             $this->firewall,
             $this->commandbus,
-            $ldap);
+            $ldap
+        );
 
         $count = count($this->repository->findAll());
 
@@ -244,7 +246,8 @@ class LdapAuthenticatorTest extends TransactionalTestCase
             $this->encoders,
             $this->firewall,
             $this->commandbus,
-            $ldap);
+            $ldap
+        );
 
         $count = count($this->repository->findAll());
 
@@ -281,7 +284,8 @@ class LdapAuthenticatorTest extends TransactionalTestCase
             $this->encoders,
             $this->firewall,
             $this->commandbus,
-            $ldap);
+            $ldap
+        );
 
         $count = count($this->repository->findAll());
 
@@ -305,7 +309,8 @@ class LdapAuthenticatorTest extends TransactionalTestCase
             $this->session,
             $this->encoders,
             $this->firewall,
-            $this->commandbus);
+            $this->commandbus
+        );
 
         $credentials = [
             'username' => 'newton@example.com',
@@ -325,7 +330,8 @@ class LdapAuthenticatorTest extends TransactionalTestCase
             $this->encoders,
             $this->firewall,
             $this->commandbus,
-            $ldap);
+            $ldap
+        );
 
         $credentials = [
             'username' => 'newton@example.com',
@@ -351,7 +357,8 @@ class LdapAuthenticatorTest extends TransactionalTestCase
             $this->encoders,
             $this->firewall,
             $this->commandbus,
-            $ldap);
+            $ldap
+        );
 
         $credentials = [
             'username' => 'newton@example.com',
@@ -372,7 +379,8 @@ class LdapAuthenticatorTest extends TransactionalTestCase
             $this->session,
             $this->encoders,
             $this->firewall,
-            $this->commandbus);
+            $this->commandbus
+        );
 
         $credentials = [
             'username' => 'newton@example.com',
@@ -392,7 +400,8 @@ class LdapAuthenticatorTest extends TransactionalTestCase
             $this->session,
             $this->encoders,
             $this->firewall,
-            $this->commandbus);
+            $this->commandbus
+        );
 
         $request   = new Request();
         $exception = new AuthenticationException();
@@ -407,7 +416,8 @@ class LdapAuthenticatorTest extends TransactionalTestCase
             $this->session,
             $this->encoders,
             $this->firewall,
-            $this->commandbus);
+            $this->commandbus
+        );
 
         $router = $this->client->getContainer()->get('router');
 
@@ -421,7 +431,8 @@ class LdapAuthenticatorTest extends TransactionalTestCase
             $this->session,
             $this->encoders,
             $this->firewall,
-            $this->commandbus);
+            $this->commandbus
+        );
 
         $router = $this->client->getContainer()->get('router');
 

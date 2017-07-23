@@ -69,7 +69,7 @@ class WebTestCase extends SymfonyWebTestCase
      *
      * @param string $email Login.
      *
-     * @return User|null Whether user was authenticated.
+     * @return null|User Whether user was authenticated.
      */
     protected function loginAs(string $email)
     {

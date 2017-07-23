@@ -60,7 +60,7 @@ class LocaleExtension extends \Twig_Extension
      *
      * @param string $locale
      *
-     * @return string|null
+     * @return null|string
      */
     public function filterLanguage(string $locale)
     {

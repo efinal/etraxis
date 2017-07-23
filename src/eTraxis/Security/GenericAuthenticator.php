@@ -46,7 +46,8 @@ class GenericAuthenticator extends AbstractAuthenticator
         SessionInterface        $session,
         EncoderFactoryInterface $encoders,
         FirewallMap             $firewalls,
-        CommandBus              $commandbus)
+        CommandBus              $commandbus
+    )
     {
         parent::__construct($router, $session, $encoders, $firewalls);
 

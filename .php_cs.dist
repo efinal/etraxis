@@ -23,6 +23,7 @@ return PhpCsFixer\Config::create()
         //  Rules.
         //--------------------------------------------------------------
 
+        'align_multiline_comment'                       => true,
         'array_syntax'                                  => [
             'syntax' => 'short',
         ],
@@ -32,6 +33,7 @@ return PhpCsFixer\Config::create()
         ],
         'blank_line_after_opening_tag'                  => true,
         'blank_line_before_return'                      => true,
+        'blank_line_before_statement'                   => true,
         'braces'                                        => false,
         'cast_spaces'                                   => true,
         'class_keyword_remove'                          => false,
@@ -42,6 +44,7 @@ return PhpCsFixer\Config::create()
         'declare_equal_normalize'                       => true,
         'declare_strict_types'                          => false,
         'dir_constant'                                  => true,
+        'doctrine_annotation_array_assignment'          => true,
         'doctrine_annotation_braces'                    => true,
         'doctrine_annotation_indentation'               => false,
         'doctrine_annotation_spaces'                    => true,
@@ -79,6 +82,7 @@ return PhpCsFixer\Config::create()
         'no_mixed_echo_print'                           => true,
         'no_multiline_whitespace_around_double_arrow'   => true,
         'no_multiline_whitespace_before_semicolons'     => true,
+        'no_null_property_initialization'               => true,
         'no_php4_constructor'                           => true,
         'no_short_bool_cast'                            => true,
         'no_short_echo_tag'                             => false,
@@ -129,6 +133,7 @@ return PhpCsFixer\Config::create()
         'phpdoc_to_comment'                             => false,
         'phpdoc_trim'                                   => true,
         'phpdoc_types'                                  => true,
+        'phpdoc_types_order'                            => true,
         'phpdoc_var_without_name'                       => true,
         'pre_increment'                                 => false,
         'protected_to_private'                          => false,
@@ -141,6 +146,7 @@ return PhpCsFixer\Config::create()
         'silenced_deprecation_error'                    => true,
         'simplified_null_return'                        => false,
         'single_blank_line_before_namespace'            => true,
+        'single_line_comment_style'                     => true,
         'single_quote'                                  => true,
         'space_after_semicolon'                         => true,
         'standardize_not_equals'                        => true,
@@ -151,6 +157,7 @@ return PhpCsFixer\Config::create()
         'trailing_comma_in_multiline_array'             => true,
         'trim_array_spaces'                             => true,
         'unary_operator_spaces'                         => true,
+        'void_return'                                   => false,
         'whitespace_after_comma_in_array'               => true,
     ])
     ->setFinder($finder)

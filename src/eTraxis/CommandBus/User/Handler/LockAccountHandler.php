@@ -40,7 +40,8 @@ class LockAccountHandler
         LoggerInterface        $logger,
         EntityManagerInterface $manager,
         int                    $authFailures = null,
-        int                    $lockDuration = null)
+        int                    $lockDuration = null
+    )
     {
         $this->logger       = $logger;
         $this->manager      = $manager;
