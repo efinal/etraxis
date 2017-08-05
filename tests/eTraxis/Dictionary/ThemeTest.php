@@ -23,7 +23,6 @@ class ThemeTest extends \PHPUnit_Framework_TestCase
             'emerald',
             'humanity',
             'mars',
-            'nexada',
         ];
 
         self::assertEquals($expected, Theme::keys());

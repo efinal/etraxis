@@ -28,6 +28,5 @@ class Theme extends StaticDictionary
         'emerald'   => 'Emerald',
         'humanity'  => 'Humanity',
         'mars'      => 'Mars',
-        'nexada'    => 'Nexada',
     ];
 }
