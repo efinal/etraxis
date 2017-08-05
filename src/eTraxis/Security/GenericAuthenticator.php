@@ -62,7 +62,7 @@ class GenericAuthenticator extends AbstractAuthenticator
         /** @var \eTraxis\Entity\User $user */
         $user = parent::getUser($credentials, $userProvider);
 
-        if ($user->isAccountExternal()) {
+        if ($user->isAccountExternal) {
             throw new AuthenticationException('Bad credentials.');
         }
 

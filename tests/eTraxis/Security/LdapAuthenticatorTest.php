@@ -151,8 +151,8 @@ class LdapAuthenticatorTest extends TransactionalTestCase
         $user = $authenticator->getUser($credentials, $this->provider);
 
         self::assertInstanceOf(User::class, $user);
-        self::assertEquals(AccountProvider::LDAP, $user->getAccountProvider());
-        self::assertEquals('newton', $user->getAccountUid());
+        self::assertEquals(AccountProvider::LDAP, $user->accountProvider);
+        self::assertEquals('newton', $user->accountUid);
         self::assertEquals('newton@example.com', $user->email);
         self::assertEquals('Isaac Newton', $user->fullname);
         self::assertCount($count + 1, $this->repository->findAll());
@@ -202,7 +202,7 @@ class LdapAuthenticatorTest extends TransactionalTestCase
         $user = $this->repository->findOneBy(['accountUid' => 'einstein']);
 
         self::assertInstanceOf(User::class, $user);
-        self::assertEquals(AccountProvider::LDAP, $user->getAccountProvider());
+        self::assertEquals(AccountProvider::LDAP, $user->accountProvider);
         self::assertEquals('einstein@ldap.forumsys.com', $user->email);
         self::assertEquals('Albert Einstein', $user->fullname);
 
@@ -210,8 +210,8 @@ class LdapAuthenticatorTest extends TransactionalTestCase
         $user = $authenticator->getUser($credentials, $this->provider);
 
         self::assertInstanceOf(User::class, $user);
-        self::assertEquals(AccountProvider::LDAP, $user->getAccountProvider());
-        self::assertEquals('einstein', $user->getAccountUid());
+        self::assertEquals(AccountProvider::LDAP, $user->accountProvider);
+        self::assertEquals('einstein', $user->accountUid);
         self::assertEquals('einstein@example.com', $user->email);
         self::assertEquals('A. Einstein', $user->fullname);
         self::assertCount($count, $this->repository->findAll());

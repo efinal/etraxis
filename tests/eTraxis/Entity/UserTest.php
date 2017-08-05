@@ -23,9 +23,9 @@ class UserTest extends \PHPUnit_Framework_TestCase
     public function testConstructor()
     {
         $user = new User();
+        self::assertEquals(AccountProvider::ETRAXIS, $this->getProperty($user, 'accountProvider'));
+        self::assertRegExp('/^([[:xdigit:]]{32})$/is', $this->getProperty($user, 'accountUid'));
         self::assertEquals('ROLE_USER', $this->getProperty($user, 'role'));
-        self::assertEquals(AccountProvider::ETRAXIS, $user->getAccountProvider());
-        self::assertRegExp('/^([[:xdigit:]]{32})$/is', $user->getAccountUid());
     }
 
     public function testUsername()
@@ -70,6 +70,18 @@ class UserTest extends \PHPUnit_Framework_TestCase
 
         $user->password = 'secret';
         self::assertNull($user->getEncoderName());
+    }
+
+    public function testIsAccountExternal()
+    {
+        $user = new User();
+        self::assertFalse($user->isAccountExternal);
+
+        $user->accountProvider = AccountProvider::LDAP;
+        self::assertTrue($user->isAccountExternal);
+
+        $user->accountProvider = AccountProvider::ETRAXIS;
+        self::assertFalse($user->isAccountExternal);
     }
 
     public function testIsAdmin()
@@ -125,10 +137,10 @@ class UserTest extends \PHPUnit_Framework_TestCase
         $user = new User();
         self::assertTrue($this->callMethod($user, 'canPasswordBeExpired'));
 
-        $user->setAccountProvider(AccountProvider::LDAP);
+        $user->accountProvider = AccountProvider::LDAP;
         self::assertFalse($this->callMethod($user, 'canPasswordBeExpired'));
 
-        $user->setAccountProvider(AccountProvider::ETRAXIS);
+        $user->accountProvider = AccountProvider::ETRAXIS;
         self::assertTrue($this->callMethod($user, 'canPasswordBeExpired'));
     }
 
@@ -137,10 +149,10 @@ class UserTest extends \PHPUnit_Framework_TestCase
         $user = new User();
         self::assertTrue($this->callMethod($user, 'canAccountBeLocked'));
 
-        $user->setAccountProvider(AccountProvider::LDAP);
+        $user->accountProvider = AccountProvider::LDAP;
         self::assertFalse($this->callMethod($user, 'canAccountBeLocked'));
 
-        $user->setAccountProvider(AccountProvider::ETRAXIS);
+        $user->accountProvider = AccountProvider::ETRAXIS;
         self::assertTrue($this->callMethod($user, 'canAccountBeLocked'));
     }
 }

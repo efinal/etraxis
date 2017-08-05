@@ -152,7 +152,7 @@ class LdapAuthenticator extends AbstractAuthenticator
 
         try {
             /** @var User $user */
-            $dn = sprintf('%s=%s,%s', LdapServerType::get($this->type), $user->getAccountUid(), $this->basedn);
+            $dn = sprintf('%s=%s,%s', LdapServerType::get($this->type), $user->accountUid, $this->basedn);
             $this->ldap->bind($dn, $credentials['password']);
         }
         catch (\Exception $e) {

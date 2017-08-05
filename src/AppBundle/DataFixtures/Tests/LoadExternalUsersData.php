@@ -36,11 +36,10 @@ class LoadExternalUsersData extends AbstractFixture implements OrderedFixtureInt
     {
         $user = new User();
 
-        $user->setAccountProvider(AccountProvider::LDAP);
-        $user->setAccountUid('einstein');
-
-        $user->email    = 'einstein@ldap.forumsys.com';
-        $user->fullname = 'Albert Einstein';
+        $user->accountProvider = AccountProvider::LDAP;
+        $user->accountUid      = 'einstein';
+        $user->email           = 'einstein@ldap.forumsys.com';
+        $user->fullname        = 'Albert Einstein';
 
         $manager->persist($user);
         $manager->flush();

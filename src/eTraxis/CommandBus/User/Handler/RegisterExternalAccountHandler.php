@@ -83,11 +83,10 @@ class RegisterExternalAccountHandler
             $this->logger->info('Update external account.', [$command->email, $command->fullname]);
         }
 
-        $user->setAccountProvider($command->provider);
-        $user->setAccountUid($command->uid);
-
-        $user->email    = $command->email;
-        $user->fullname = $command->fullname;
+        $user->accountProvider = $command->provider;
+        $user->accountUid      = $command->uid;
+        $user->email           = $command->email;
+        $user->fullname        = $command->fullname;
 
         $this->manager->persist($user);
     }

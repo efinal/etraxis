@@ -18,7 +18,6 @@ use eTraxis\Dictionary\AccountProvider;
 use eTraxis\Dictionary\Locale;
 use eTraxis\Dictionary\Theme;
 use eTraxis\Dictionary\Timezone;
-use eTraxis\Security\ExternalAccountTrait;
 use Pignus\Model as Pignus;
 use Ramsey\Uuid\Uuid;
 use Symfony\Bridge\Doctrine\Validator\Constraints as Assert;
@@ -38,10 +37,13 @@ use Webinarium\PropertyTrait;
  * @Assert\UniqueEntity(fields={"email"}, message="user.conflict.email")
  *
  * @property-read int    $id
+ * @property      string $accountProvider
+ * @property      string $accountUid
  * @property      string $email
  * @property      string $password
  * @property      string $fullname
  * @property      string $description
+ * @property-read bool   $isAccountExternal
  * @property      bool   $isAdmin
  * @property      string $locale
  * @property      string $theme
@@ -51,7 +53,6 @@ class User implements AdvancedUserInterface, EncoderAwareInterface
 {
     use PropertyTrait;
     use Pignus\UserTrait;
-    use ExternalAccountTrait;
     use Pignus\DisableAccountTrait;
     use Pignus\ExpireAccountTrait;
     use Pignus\ExpirePasswordTrait;
@@ -74,6 +75,20 @@ class User implements AdvancedUserInterface, EncoderAwareInterface
      * @ORM\Column(name="id", type="integer")
      */
     protected $id;
+
+    /**
+     * @var string Account provider (see the "AccountProvider" dictionary).
+     *
+     * @ORM\Column(name="account_provider", type="string", length=20)
+     */
+    protected $accountProvider;
+
+    /**
+     * @var string Account UID as in the external provider's system.
+     *
+     * @ORM\Column(name="account_uid", type="string", length=128)
+     */
+    protected $accountUid;
 
     /**
      * @var string Email address (also used as a username).
@@ -122,9 +137,9 @@ class User implements AdvancedUserInterface, EncoderAwareInterface
      */
     public function __construct()
     {
-        $this->role            = self::ROLE_USER;
         $this->accountProvider = AccountProvider::ETRAXIS;
         $this->accountUid      = Uuid::uuid4()->getHex();
+        $this->role            = self::ROLE_USER;
     }
 
     /**
@@ -174,6 +189,10 @@ class User implements AdvancedUserInterface, EncoderAwareInterface
     protected function getters(): array
     {
         return [
+
+            'isAccountExternal' => function () {
+                return $this->accountProvider !== AccountProvider::ETRAXIS;
+            },
 
             'isAdmin' => function () {
                 return $this->role === self::ROLE_ADMIN;
@@ -229,7 +248,7 @@ class User implements AdvancedUserInterface, EncoderAwareInterface
      */
     protected function canPasswordBeExpired(): bool
     {
-        return !$this->isAccountExternal();
+        return !$this->isAccountExternal;
     }
 
     /**
@@ -237,6 +256,6 @@ class User implements AdvancedUserInterface, EncoderAwareInterface
      */
     protected function canAccountBeLocked(): bool
     {
-        return !$this->isAccountExternal();
+        return !$this->isAccountExternal;
     }
 }
