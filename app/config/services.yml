@@ -10,16 +10,16 @@ services:
 
     Symfony\Component\Ldap\LdapInterface:
         class: Symfony\Component\Ldap\LdapInterface
-        factory: [ eTraxis\Security\LdapAuthenticator, ldap ]
+        factory: [ eTraxis\Framework\Security\LdapAuthenticator, ldap ]
         arguments:
             $host:       '%ldap_host%'
             $port:       '%ldap_port%'
             $encryption: '%ldap_encryption%'
 
-    eTraxis\Service\:
-        resource: '../../src/eTraxis/Service'
+    eTraxis\Framework\Services\:
+        resource: '../../src/Framework/Services'
 
     # Autowiring hints
-    eTraxis\Service\MailerService:
+    eTraxis\Framework\Services\MailerService:
         $address: '%mailfrom_address%'
         $name:    '%mailfrom_name%'

@@ -5,8 +5,8 @@ services:
         autoconfigure: true
         public: false
 
-    eTraxis\Twig\:
-        resource: '../../../src/eTraxis/Twig'
+    eTraxis\Framework\Twig\:
+        resource: '../../../src/Framework/Twig'
 
     # See "twig/extensions" package
     twig.extension.intl:

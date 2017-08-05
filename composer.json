@@ -41,8 +41,10 @@
     },
     "autoload": {
         "psr-4": {
-            "AppBundle\\" : "src/AppBundle",
-            "eTraxis\\"   : "src/eTraxis"
+            "AppBundle\\"            : "src/AppBundle",
+            "eTraxis\\Application\\" : "src/Application",
+            "eTraxis\\Domain\\"      : "src/Domain",
+            "eTraxis\\Framework\\"   : "src/Framework"
         },
         "classmap": [
             "app/AppKernel.php",
@@ -51,8 +53,10 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "AppBundle\\" : "tests/AppBundle",
-            "eTraxis\\"   : "tests/eTraxis"
+            "AppBundle\\"            : "tests/AppBundle",
+            "eTraxis\\Application\\" : "tests/Application",
+            "eTraxis\\Domain\\"      : "tests/Domain",
+            "eTraxis\\Framework\\"   : "tests/Framework"
         },
         "files": [
             "vendor/symfony/symfony/src/Symfony/Component/VarDumper/Resources/functions/dump.php"
@@ -61,7 +65,7 @@
     "scripts": {
         "symfony-scripts": [
             "Incenteev\\ParameterHandler\\ScriptHandler::buildParameters",
-            "eTraxis\\Composer\\ParameterHandler::updateSecret",
+            "eTraxis\\Framework\\Composer\\ParameterHandler::updateSecret",
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::buildBootstrap",
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::clearCache",
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installRequirementsFile",

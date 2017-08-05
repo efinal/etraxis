@@ -8,5 +8,5 @@ services:
 
     Pignus\Model\UserRepositoryInterface:
         parent: abstract.repository
-        class: eTraxis\Repository\UserRepository
-        arguments: [ eTraxis\Entity\User ]
+        class: eTraxis\Domain\Repository\UserRepository
+        arguments: [ eTraxis\Domain\Entity\User ]

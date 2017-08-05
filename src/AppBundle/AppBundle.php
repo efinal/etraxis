@@ -14,7 +14,7 @@
 namespace AppBundle;
 
 use Doctrine\ORM\Query;
-use eTraxis\Doctrine\SortableNullsWalker;
+use eTraxis\Framework\Doctrine\SortableNullsWalker;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
 class AppBundle extends Bundle

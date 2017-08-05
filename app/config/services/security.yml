@@ -6,12 +6,12 @@ services:
 
     etraxis.authenticator.generic:
         parent: pignus.authenticator.abstract
-        class: eTraxis\Security\GenericAuthenticator
+        class: eTraxis\Framework\Security\GenericAuthenticator
         autowire: true
 
     etraxis.authenticator.ldap:
         parent: pignus.authenticator.abstract
-        class: eTraxis\Security\LdapAuthenticator
+        class: eTraxis\Framework\Security\LdapAuthenticator
         autowire: true
         arguments:
             $type:     '%ldap_type%'
@@ -20,9 +20,9 @@ services:
             $basedn:   '%ldap_basedn%'
 
     # @todo Remove in 4.1
-    eTraxis\Security\Md5PasswordEncoder:
+    eTraxis\Framework\Security\Md5PasswordEncoder:
         public: false
 
     # @todo Remove in 4.1
-    eTraxis\Security\Sha1PasswordEncoder:
+    eTraxis\Framework\Security\Sha1PasswordEncoder:
         public: false

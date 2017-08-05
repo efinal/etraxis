@@ -4,19 +4,19 @@ services:
         autowire: true
         public: true
 
-    eTraxis\CommandBus\:
-        resource: '../../../src/eTraxis/CommandBus/*/Handler'
+    eTraxis\Application\Handler\:
+        resource: '../../../src/Application/Handler'
 
     # Alias for autowiring
     League\Tactician\CommandBus: '@tactician.commandbus'
 
     # Custom middleware
     tactician.middleware.timing:
-        class: eTraxis\CommandBus\TimingMiddleware
+        class: eTraxis\Framework\CommandBus\TimingMiddleware
         public: false
 
     # Custom handler locator
-    eTraxis\CommandBus\HandlerLocator:
+    eTraxis\Framework\CommandBus\HandlerLocator:
         public: false
         calls: [[ setContainer, [ '@service_container' ] ]]
 
@@ -26,15 +26,15 @@ services:
         public: false
         arguments:
             - '@tactician.handler.command_name_extractor.class_name'
-            - '@eTraxis\CommandBus\HandlerLocator'
+            - '@eTraxis\Framework\CommandBus\HandlerLocator'
             - '@tactician.handler.method_name_inflector.handle'
 
     # Autowiring hints
-    eTraxis\CommandBus\User\Handler\LockAccountHandler:
+    eTraxis\Application\Handler\User\LockAccountHandler:
         $authFailures: '%auth_failures%'
         $lockDuration: '%lock_duration%'
 
     # Autowiring hints
-    eTraxis\CommandBus\User\Handler\RegisterExternalAccountHandler:
+    eTraxis\Application\Handler\User\RegisterExternalAccountHandler:
         $locale: '%locale%'
         $theme:  '%theme%'

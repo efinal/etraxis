@@ -13,7 +13,7 @@
 
 namespace AppBundle\Controller\Admin;
 
-use eTraxis\Tests\WebTestCase;
+use eTraxis\Framework\Tests\WebTestCase;
 use Symfony\Component\HttpFoundation\Request;
 
 class DefaultControllerTest extends WebTestCase

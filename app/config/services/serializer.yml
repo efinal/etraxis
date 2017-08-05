@@ -5,5 +5,5 @@ services:
         autoconfigure: true
         public: false
 
-    eTraxis\Serializer\:
-        resource: '../../../src/eTraxis/Serializer'
+    eTraxis\Framework\Serializer\:
+        resource: '../../../src/Framework/Serializer'

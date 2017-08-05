@@ -5,9 +5,9 @@ services:
         autoconfigure: true
         public: false
 
-    eTraxis\EventSubscriber\:
-        resource: '../../../src/eTraxis/EventSubscriber'
+    eTraxis\Framework\EventSubscriber\:
+        resource: '../../../src/Framework/EventSubscriber'
 
     # Autowiring hints
-    eTraxis\EventSubscriber\StickyLocale:
+    eTraxis\Framework\EventSubscriber\StickyLocale:
         $locale: '%locale%'

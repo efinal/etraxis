@@ -16,8 +16,8 @@ namespace AppBundle\DataFixtures\Tests;
 use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
-use eTraxis\Dictionary\AccountProvider;
-use eTraxis\Entity\User;
+use eTraxis\Domain\Dictionary\AccountProvider;
+use eTraxis\Domain\Entity\User;
 
 class LoadExternalUsersData extends AbstractFixture implements OrderedFixtureInterface
 {
