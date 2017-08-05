@@ -13,7 +13,7 @@
 
 namespace eTraxis\CommandBus\User\Handler;
 
-use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\Common\Persistence\ObjectManager;
 use eTraxis\CommandBus\User\RegisterExternalAccountCommand;
 use eTraxis\Entity\User;
 use Psr\Log\LoggerInterface;
@@ -31,12 +31,12 @@ class RegisterExternalAccountHandler
     /**
      * Dependency Injection constructor.
      *
-     * @param LoggerInterface        $logger
-     * @param EntityManagerInterface $manager
-     * @param string                 $locale
-     * @param string                 $theme
+     * @param LoggerInterface $logger
+     * @param ObjectManager   $manager
+     * @param string          $locale
+     * @param string          $theme
      */
-    public function __construct(LoggerInterface $logger, EntityManagerInterface $manager, string $locale, string $theme)
+    public function __construct(LoggerInterface $logger, ObjectManager $manager, string $locale, string $theme)
     {
         $this->logger  = $logger;
         $this->manager = $manager;

@@ -13,7 +13,7 @@
 
 namespace eTraxis\CommandBus\User\Handler;
 
-use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\Common\Persistence\ObjectManager;
 use eTraxis\CommandBus\User\UnlockAccountCommand;
 use eTraxis\Entity\User;
 
@@ -27,9 +27,9 @@ class UnlockAccountHandler
     /**
      * Dependency Injection constructor.
      *
-     * @param EntityManagerInterface $manager
+     * @param ObjectManager $manager
      */
-    public function __construct(EntityManagerInterface $manager)
+    public function __construct(ObjectManager $manager)
     {
         $this->manager = $manager;
     }

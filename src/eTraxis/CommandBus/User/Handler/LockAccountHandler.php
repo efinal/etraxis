@@ -13,7 +13,7 @@
 
 namespace eTraxis\CommandBus\User\Handler;
 
-use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\Common\Persistence\ObjectManager;
 use eTraxis\CommandBus\User\LockAccountCommand;
 use eTraxis\Entity\User;
 use Psr\Log\LoggerInterface;
@@ -31,16 +31,16 @@ class LockAccountHandler
     /**
      * Dependency Injection constructor.
      *
-     * @param LoggerInterface        $logger
-     * @param EntityManagerInterface $manager
-     * @param int                    $authFailures
-     * @param int                    $lockDuration
+     * @param LoggerInterface $logger
+     * @param ObjectManager   $manager
+     * @param int             $authFailures
+     * @param int             $lockDuration
      */
     public function __construct(
-        LoggerInterface        $logger,
-        EntityManagerInterface $manager,
-        int                    $authFailures = null,
-        int                    $lockDuration = null
+        LoggerInterface $logger,
+        ObjectManager   $manager,
+        int             $authFailures = null,
+        int             $lockDuration = null
     )
     {
         $this->logger       = $logger;
