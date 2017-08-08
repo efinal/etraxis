@@ -14,10 +14,7 @@
 namespace eTraxis\Domain\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use eTraxis\Domain\Dictionary\AccountProvider;
-use eTraxis\Domain\Dictionary\Locale;
-use eTraxis\Domain\Dictionary\Theme;
-use eTraxis\Domain\Dictionary\Timezone;
+use eTraxis\Domain\Dictionary;
 use Pignus\Model as Pignus;
 use Ramsey\Uuid\Uuid;
 use Symfony\Bridge\Doctrine\Validator\Constraints as Assert;
@@ -137,7 +134,7 @@ class User implements AdvancedUserInterface, EncoderAwareInterface
      */
     public function __construct()
     {
-        $this->accountProvider = AccountProvider::ETRAXIS;
+        $this->accountProvider = Dictionary\AccountProvider::ETRAXIS;
         $this->accountUid      = Uuid::uuid4()->getHex();
         $this->role            = self::ROLE_USER;
     }
@@ -191,7 +188,7 @@ class User implements AdvancedUserInterface, EncoderAwareInterface
         return [
 
             'isAccountExternal' => function () {
-                return $this->accountProvider !== AccountProvider::ETRAXIS;
+                return $this->accountProvider !== Dictionary\AccountProvider::ETRAXIS;
             },
 
             'isAdmin' => function () {
@@ -199,15 +196,15 @@ class User implements AdvancedUserInterface, EncoderAwareInterface
             },
 
             'locale' => function () {
-                return $this->settings['locale'] ?? Locale::FALLBACK;
+                return $this->settings['locale'] ?? Dictionary\Locale::FALLBACK;
             },
 
             'theme' => function () {
-                return $this->settings['theme'] ?? Theme::FALLBACK;
+                return $this->settings['theme'] ?? Dictionary\Theme::FALLBACK;
             },
 
             'timezone' => function () {
-                return $this->settings['timezone'] ?? Timezone::FALLBACK;
+                return $this->settings['timezone'] ?? Dictionary\Timezone::FALLBACK;
             },
         ];
     }
@@ -224,19 +221,19 @@ class User implements AdvancedUserInterface, EncoderAwareInterface
             },
 
             'locale' => function (string $value) {
-                if (Locale::has($value)) {
+                if (Dictionary\Locale::has($value)) {
                     $this->settings['locale'] = $value;
                 }
             },
 
             'theme' => function (string $value) {
-                if (Theme::has($value)) {
+                if (Dictionary\Theme::has($value)) {
                     $this->settings['theme'] = $value;
                 }
             },
 
             'timezone' => function (string $value) {
-                if (Timezone::has($value)) {
+                if (Dictionary\Timezone::has($value)) {
                     $this->settings['timezone'] = $value;
                 }
             },
