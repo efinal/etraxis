@@ -18,7 +18,6 @@ class ThemeTest extends \PHPUnit_Framework_TestCase
     public function testDictionary()
     {
         $expected = [
-            'allblacks',
             'azure',
             'emerald',
             'humanity',
