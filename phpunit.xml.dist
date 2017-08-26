@@ -22,7 +22,7 @@
         <whitelist>
             <directory>src</directory>
             <exclude>
-                <directory>src/AppBundle/DataFixtures</directory>
+                <directory>src/SharedDomain/Framework/DataFixtures</directory>
             </exclude>
         </whitelist>
     </filter>

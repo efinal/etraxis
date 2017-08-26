@@ -1,25 +1,3 @@
 imports:
-    - { resource: services/ }
-
-services:
-
-    _defaults:
-        autowire: true
-        autoconfigure: true
-        public: false
-
-    Symfony\Component\Ldap\LdapInterface:
-        class: Symfony\Component\Ldap\LdapInterface
-        factory: [ eTraxis\Framework\Security\LdapAuthenticator, ldap ]
-        arguments:
-            $host:       '%ldap_host%'
-            $port:       '%ldap_port%'
-            $encryption: '%ldap_encryption%'
-
-    eTraxis\Framework\Services\:
-        resource: '../../src/Framework/Services'
-
-    # Autowiring hints
-    eTraxis\Framework\Services\MailerService:
-        $address: '%mailfrom_address%'
-        $name:    '%mailfrom_name%'
+    - { resource: ../../src/AccountsDomain/Framework/Resources/config/services.yml }
+    - { resource: ../../src/SharedDomain/Framework/Resources/config/services.yml   }

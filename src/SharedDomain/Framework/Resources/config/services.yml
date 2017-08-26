@@ -1,0 +1,20 @@
+imports:
+    - { resource: commandbus.yml  }
+    - { resource: serializer.yml  }
+    - { resource: subscribers.yml }
+    - { resource: twig.yml        }
+
+services:
+
+    _defaults:
+        autowire: true
+        autoconfigure: true
+        public: false
+
+    eTraxis\SharedDomain\Application\Services\:
+        resource: '../../../Application/Services'
+
+    # Autowiring hints
+    eTraxis\SharedDomain\Application\Services\MailerService:
+        $address: '%mailfrom_address%'
+        $name:    '%mailfrom_name%'

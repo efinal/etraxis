@@ -1,0 +1,28 @@
+services:
+
+    _defaults:
+        autowire: true
+        autoconfigure: true
+        public: true
+
+    # Alias for autowiring
+    League\Tactician\CommandBus: '@tactician.commandbus'
+
+    # Custom middleware
+    tactician.middleware.timing:
+        class: eTraxis\SharedDomain\Framework\CommandBus\TimingMiddleware
+        public: false
+
+    # Custom handler locator
+    eTraxis\SharedDomain\Framework\CommandBus\HandlerLocator:
+        public: false
+        calls: [[ setContainer, [ '@service_container' ] ]]
+
+    # Overridden command handler middleware to inject custom handler locator
+    tactician.middleware.command_handler:
+        class: League\Tactician\Handler\CommandHandlerMiddleware
+        public: false
+        arguments:
+            - '@tactician.handler.command_name_extractor.class_name'
+            - '@eTraxis\SharedDomain\Framework\CommandBus\HandlerLocator'
+            - '@tactician.handler.method_name_inflector.handle'

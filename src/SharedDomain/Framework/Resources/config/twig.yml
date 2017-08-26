@@ -1,0 +1,13 @@
+services:
+
+    _defaults:
+        autowire: true
+        autoconfigure: true
+        public: false
+
+    eTraxis\SharedDomain\Framework\Twig\:
+        resource: '../../Twig'
+
+    # See "twig/extensions" package
+    twig.extension.intl:
+        class: Twig_Extensions_Extension_Intl

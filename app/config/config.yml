@@ -50,12 +50,12 @@ doctrine:
         auto_generate_proxy_classes: '%kernel.debug%'
         naming_strategy: doctrine.orm.naming_strategy.underscore
         mappings:
-            model:
+            AccountsDomain:
                 type:      annotation
-                dir:       '%kernel.project_dir%/src/Domain/Entity'
-                prefix:    eTraxis\Domain\Entity
-                alias:     eTraxis
+                dir:       '%kernel.project_dir%/src/AccountsDomain/Domain/Model'
                 is_bundle: false
+                prefix:    eTraxis\AccountsDomain\Domain\Model
+                alias:     AccountsDomain
 
 # Swiftmailer Configuration
 swiftmailer:

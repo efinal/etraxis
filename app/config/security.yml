@@ -1,11 +1,11 @@
 security:
 
     encoders:
-        eTraxis\Domain\Entity\User: bcrypt
+        eTraxis\AccountsDomain\Domain\Model\User: bcrypt
         legacy.md5:
-            id: eTraxis\Framework\Security\Md5PasswordEncoder
+            id: eTraxis\AccountsDomain\Framework\Authentication\Md5PasswordEncoder
         legacy.sha1:
-            id: eTraxis\Framework\Security\Sha1PasswordEncoder
+            id: eTraxis\AccountsDomain\Framework\Authentication\Sha1PasswordEncoder
 
     providers:
         etraxis_provider:

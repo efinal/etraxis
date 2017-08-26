@@ -1,0 +1,28 @@
+services:
+
+    etraxis.provider.generic:
+        parent: pignus.provider.abstract
+        autowire: true
+
+    etraxis.authenticator.generic:
+        parent: pignus.authenticator.abstract
+        class: eTraxis\AccountsDomain\Framework\Authentication\GenericAuthenticator
+        autowire: true
+
+    etraxis.authenticator.ldap:
+        parent: pignus.authenticator.abstract
+        class: eTraxis\AccountsDomain\Framework\Authentication\LdapAuthenticator
+        autowire: true
+        arguments:
+            $type:     '%ldap_type%'
+            $user:     '%ldap_user%'
+            $password: '%ldap_password%'
+            $basedn:   '%ldap_basedn%'
+
+    # @todo Remove in 4.1
+    eTraxis\AccountsDomain\Framework\Authentication\Md5PasswordEncoder:
+        public: false
+
+    # @todo Remove in 4.1
+    eTraxis\AccountsDomain\Framework\Authentication\Sha1PasswordEncoder:
+        public: false

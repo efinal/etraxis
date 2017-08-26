@@ -10,7 +10,7 @@ filter:
     excluded_paths:
         - 'app/*'
         - 'bin/*'
-        - 'src/AppBundle/DataFixtures/*'
+        - 'src/SharedDomain/Framework/DataFixtures/*'
         - 'tests/*'
         - 'var/*'
         - 'web/*'

@@ -1,12 +1,8 @@
-pignus_login:
+PignusLogin:
     resource: '@PignusBundle/Resources/routing/login.yml'
 
-user:
-    resource: '@AppBundle/Controller/User/'
-    type:     annotation
-    prefix:   /
+AccountsDomain:
+    resource: '../src/AccountsDomain/Framework/Resources/config/routing.yml'
 
-admin:
-    resource: '@AppBundle/Controller/Admin/'
-    type:     annotation
-    prefix:   /admin
+SharedDomain:
+    resource: '../src/SharedDomain/Framework/Resources/config/routing.yml'

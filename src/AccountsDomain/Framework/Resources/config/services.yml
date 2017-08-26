@@ -1,0 +1,23 @@
+imports:
+    - { resource: authentication.yml }
+    - { resource: commands.yml       }
+
+services:
+
+    _defaults:
+        autowire: true
+        autoconfigure: true
+        public: false
+
+    Pignus\Model\UserRepositoryInterface:
+        class: eTraxis\AccountsDomain\Domain\Repository\UserRepository
+        factory: [ '@doctrine.orm.default_entity_manager', 'getRepository' ]
+        arguments: [ eTraxis\AccountsDomain\Domain\Model\User ]
+
+    Symfony\Component\Ldap\LdapInterface:
+        class: Symfony\Component\Ldap\LdapInterface
+        factory: [ eTraxis\AccountsDomain\Framework\Authentication\LdapAuthenticator, ldap ]
+        arguments:
+            $host:       '%ldap_host%'
+            $port:       '%ldap_port%'
+            $encryption: '%ldap_encryption%'
