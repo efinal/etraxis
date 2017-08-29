@@ -14,6 +14,8 @@
 namespace eTraxis\SharedDomain\Framework\EventSubscriber;
 
 use eTraxis\SharedDomain\Framework\CommandBus\DummyCommand;
+use eTraxis\SharedDomain\Framework\EventBus\DummyEvent;
+use eTraxis\SharedDomain\Framework\EventBus\InvalidEventException;
 use eTraxis\SharedDomain\Framework\Serializer\ConstraintViolationsNormalizer;
 use League\Tactician\Bundle\Middleware\InvalidCommandException;
 use Psr\Log\NullLogger;
@@ -98,6 +100,55 @@ class UnhandledExceptionTest extends \PHPUnit_Framework_TestCase
             $request,
             HttpKernelInterface::SUB_REQUEST,
             InvalidCommandException::onCommand($command, $violations)
+        );
+
+        $logger     = new NullLogger();
+        $normalizer = new ConstraintViolationsNormalizer();
+        $exception  = new UnhandledException($logger, $normalizer);
+
+        $exception->onException($event);
+
+        $response = $event->getResponse();
+        $content  = $response->getContent();
+
+        self::assertEquals(Response::HTTP_BAD_REQUEST, $response->getStatusCode());
+        self::assertEquals($expected, json_decode($content, true));
+    }
+
+    public function testInvalidEventException()
+    {
+        $expected = [
+            [
+                'property' => 'property',
+                'value'    => '0',
+                'message'  => 'This value should be "1" or more.',
+            ],
+        ];
+
+        $request = new Request();
+        $request->headers->add(['X-Requested-With' => 'XMLHttpRequest']);
+
+        /** @var HttpKernelInterface $kernel */
+        $kernel = $this->createMock(HttpKernelInterface::class);
+
+        $violations = new ConstraintViolationList();
+        $violations->add(new ConstraintViolation(
+            'This value should be "1" or more.',
+            'This value should be {{ limit }} or more.',
+            [
+                '{{ value }}' => '"0"',
+                '{{ limit }}' => '"1"',
+            ],
+            new DummyEvent(['property' => 0]),
+            'property',
+            '0'
+        ));
+
+        $event = new GetResponseForExceptionEvent(
+            $kernel,
+            $request,
+            HttpKernelInterface::SUB_REQUEST,
+            new InvalidEventException(new DummyEvent(['property' => '0']), $violations)
         );
 
         $logger     = new NullLogger();

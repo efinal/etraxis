@@ -14,6 +14,11 @@ services:
     eTraxis\SharedDomain\Application\Services\:
         resource: '../../../Application/Services'
 
+    # Event bus
+    eTraxis\SharedDomain\Framework\EventBus\EventBusInterface:
+        class: eTraxis\SharedDomain\Framework\EventBus\EventBus
+        public: true
+
     # Autowiring hints
     eTraxis\SharedDomain\Application\Services\MailerService:
         $address: '%mailfrom_address%'

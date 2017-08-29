@@ -13,6 +13,7 @@
 
 namespace eTraxis\SharedDomain\Framework\EventSubscriber;
 
+use eTraxis\SharedDomain\Framework\EventBus\InvalidEventException;
 use League\Tactician\Bundle\Middleware\InvalidCommandException;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
@@ -64,6 +65,12 @@ class UnhandledException implements EventSubscriberInterface
         if ($request->isXmlHttpRequest()) {
 
             if ($exception instanceof InvalidCommandException) {
+                $violations = $this->normalizer->normalize($exception->getViolations());
+                $this->logger->critical('Validation exception', [$exception->getMessage(), $violations]);
+                $response = new JsonResponse($violations, JsonResponse::HTTP_BAD_REQUEST);
+                $event->setResponse($response);
+            }
+            elseif ($exception instanceof InvalidEventException) {
                 $violations = $this->normalizer->normalize($exception->getViolations());
                 $this->logger->critical('Validation exception', [$exception->getMessage(), $violations]);
                 $response = new JsonResponse($violations, JsonResponse::HTTP_BAD_REQUEST);
