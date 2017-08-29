@@ -29,7 +29,7 @@
         "league/tactician-doctrine"            : "^1.1",
         "ramsey/uuid"                          : "^3.6",
         "webinarium/php-dictionary"            : "^1.1",
-        "webinarium/php-properties"            : "^0.0.1",
+        "webinarium/php-properties"            : "^1.0",
         "webinarium/pignus-bundle"             : "^1.0",
         "roave/security-advisories"            : "dev-master"
     },
