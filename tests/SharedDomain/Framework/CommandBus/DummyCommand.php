@@ -14,10 +14,11 @@
 namespace eTraxis\SharedDomain\Framework\CommandBus;
 
 use Symfony\Component\Validator\Constraints as Assert;
+use Webinarium\DataTransferObjectTrait;
 
 class DummyCommand
 {
-    use CommandTrait;
+    use DataTransferObjectTrait;
 
     /**
      * @Assert\Range(min="1", max="100")

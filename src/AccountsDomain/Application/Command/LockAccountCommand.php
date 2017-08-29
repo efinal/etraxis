@@ -13,8 +13,8 @@
 
 namespace eTraxis\AccountsDomain\Application\Command;
 
-use eTraxis\SharedDomain\Framework\CommandBus\CommandTrait;
 use Symfony\Component\Validator\Constraints as Assert;
+use Webinarium\DataTransferObjectTrait;
 
 /**
  * Increases locks count for specified account.
@@ -23,7 +23,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  */
 class LockAccountCommand
 {
-    use CommandTrait;
+    use DataTransferObjectTrait;
 
     /**
      * @Assert\NotBlank

@@ -13,8 +13,8 @@
 
 namespace eTraxis\AccountsDomain\Application\Command;
 
-use eTraxis\SharedDomain\Framework\CommandBus\CommandTrait;
 use Symfony\Component\Validator\Constraints as Assert;
+use Webinarium\DataTransferObjectTrait;
 
 /**
  * Registers external account in eTraxis database.
@@ -26,7 +26,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  */
 class RegisterExternalAccountCommand
 {
-    use CommandTrait;
+    use DataTransferObjectTrait;
 
     /**
      * @Assert\NotBlank

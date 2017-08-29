@@ -44,7 +44,7 @@ class TimingMiddleware implements Middleware
         }
         finally {
             $stop = microtime(true);
-            $this->logger->debug('Command processing time', [$stop - $start]);
+            $this->logger->debug('Command processing time', [$stop - $start, get_class($command)]);
         }
 
         return $value ?? null;
