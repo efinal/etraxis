@@ -136,7 +136,7 @@ class LdapAuthenticatorTest extends TransactionalTestCase
             $this->session,
             $this->encoders,
             $this->firewall,
-            $this->commandbus,
+            $this->eventbus,
             $ldap
         );
 
@@ -187,7 +187,7 @@ class LdapAuthenticatorTest extends TransactionalTestCase
             $this->session,
             $this->encoders,
             $this->firewall,
-            $this->commandbus,
+            $this->eventbus,
             $ldap
         );
 
@@ -245,7 +245,7 @@ class LdapAuthenticatorTest extends TransactionalTestCase
             $this->session,
             $this->encoders,
             $this->firewall,
-            $this->commandbus,
+            $this->eventbus,
             $ldap
         );
 
@@ -283,7 +283,7 @@ class LdapAuthenticatorTest extends TransactionalTestCase
             $this->session,
             $this->encoders,
             $this->firewall,
-            $this->commandbus,
+            $this->eventbus,
             $ldap
         );
 
@@ -309,7 +309,7 @@ class LdapAuthenticatorTest extends TransactionalTestCase
             $this->session,
             $this->encoders,
             $this->firewall,
-            $this->commandbus
+            $this->eventbus
         );
 
         $credentials = [
@@ -329,7 +329,7 @@ class LdapAuthenticatorTest extends TransactionalTestCase
             $this->session,
             $this->encoders,
             $this->firewall,
-            $this->commandbus,
+            $this->eventbus,
             $ldap
         );
 
@@ -356,7 +356,7 @@ class LdapAuthenticatorTest extends TransactionalTestCase
             $this->session,
             $this->encoders,
             $this->firewall,
-            $this->commandbus,
+            $this->eventbus,
             $ldap
         );
 
@@ -379,7 +379,7 @@ class LdapAuthenticatorTest extends TransactionalTestCase
             $this->session,
             $this->encoders,
             $this->firewall,
-            $this->commandbus
+            $this->eventbus
         );
 
         $credentials = [
@@ -400,7 +400,7 @@ class LdapAuthenticatorTest extends TransactionalTestCase
             $this->session,
             $this->encoders,
             $this->firewall,
-            $this->commandbus
+            $this->eventbus
         );
 
         $request   = new Request();
@@ -416,7 +416,7 @@ class LdapAuthenticatorTest extends TransactionalTestCase
             $this->session,
             $this->encoders,
             $this->firewall,
-            $this->commandbus
+            $this->eventbus
         );
 
         $router = $this->client->getContainer()->get('router');
@@ -431,7 +431,7 @@ class LdapAuthenticatorTest extends TransactionalTestCase
             $this->session,
             $this->encoders,
             $this->firewall,
-            $this->commandbus
+            $this->eventbus
         );
 
         $router = $this->client->getContainer()->get('router');

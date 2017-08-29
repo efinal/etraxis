@@ -11,17 +11,18 @@
 //
 //----------------------------------------------------------------------
 
-namespace eTraxis\AccountsDomain\Application\CommandHandler;
+namespace eTraxis\AccountsDomain\Application\EventListener;
 
 use Doctrine\Common\Persistence\ObjectManager;
-use eTraxis\AccountsDomain\Application\Command\LockAccountCommand;
+use eTraxis\AccountsDomain\Application\Event\LoginFailedEvent;
 use eTraxis\AccountsDomain\Domain\Model\User;
 use Psr\Log\LoggerInterface;
+use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 /**
- * Command handler.
+ * Event listener.
  */
-class LockAccountHandler
+class LockAccountListener implements EventSubscriberInterface
 {
     protected $logger;
     protected $manager;
@@ -50,11 +51,21 @@ class LockAccountHandler
     }
 
     /**
+     * {@inheritdoc}
+     */
+    public static function getSubscribedEvents()
+    {
+        return [
+            LoginFailedEvent::class => 'handle',
+        ];
+    }
+
+    /**
      * Increases locks count for specified account.
      *
-     * @param LockAccountCommand $command
+     * @param LoginFailedEvent $event
      */
-    public function handle(LockAccountCommand $command)
+    public function handle(LoginFailedEvent $event)
     {
         if ($this->authFailures === null) {
             return;
@@ -64,9 +75,9 @@ class LockAccountHandler
         $repository = $this->manager->getRepository(User::class);
 
         /** @var User $user */
-        if ($user = $repository->findOneByUsername($command->username)) {
+        if ($user = $repository->findOneByUsername($event->username)) {
 
-            $this->logger->info('Authentication failure', [$command->username]);
+            $this->logger->info('Authentication failure', [$event->username]);
 
             if ($user->incAuthFailures() >= $this->authFailures) {
 

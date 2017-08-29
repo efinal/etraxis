@@ -1,6 +1,7 @@
 imports:
     - { resource: authentication.yml }
     - { resource: commands.yml       }
+    - { resource: events.yml         }
 
 services:
 

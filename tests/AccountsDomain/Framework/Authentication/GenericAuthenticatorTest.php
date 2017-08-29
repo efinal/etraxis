@@ -45,7 +45,7 @@ class GenericAuthenticatorTest extends TransactionalTestCase
         /** @var FirewallMap $firewall */
         $firewall = $this->createMock(FirewallMap::class);
 
-        $this->authenticator = new GenericAuthenticator($router, $session, $encoders, $firewall, $this->commandbus);
+        $this->authenticator = new GenericAuthenticator($router, $session, $encoders, $firewall, $this->eventbus);
     }
 
     public function testGetUser()

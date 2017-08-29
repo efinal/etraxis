@@ -11,16 +11,17 @@
 //
 //----------------------------------------------------------------------
 
-namespace eTraxis\AccountsDomain\Application\CommandHandler;
+namespace eTraxis\AccountsDomain\Application\EventListener;
 
 use Doctrine\Common\Persistence\ObjectManager;
-use eTraxis\AccountsDomain\Application\Command\UnlockAccountCommand;
+use eTraxis\AccountsDomain\Application\Event\LoginSuccessfulEvent;
 use eTraxis\AccountsDomain\Domain\Model\User;
+use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 /**
- * Command handler.
+ * Event listener.
  */
-class UnlockAccountHandler
+class UnlockAccountListener implements EventSubscriberInterface
 {
     protected $manager;
 
@@ -35,17 +36,27 @@ class UnlockAccountHandler
     }
 
     /**
+     * {@inheritdoc}
+     */
+    public static function getSubscribedEvents()
+    {
+        return [
+            LoginSuccessfulEvent::class => 'handle',
+        ];
+    }
+
+    /**
      * Clears locks count for specified account.
      *
-     * @param UnlockAccountCommand $command
+     * @param LoginSuccessfulEvent $event
      */
-    public function handle(UnlockAccountCommand $command)
+    public function handle(LoginSuccessfulEvent $event)
     {
         /** @var \Pignus\Model\UserRepositoryInterface $repository */
         $repository = $this->manager->getRepository(User::class);
 
         /** @var User $user */
-        if ($user = $repository->findOneByUsername($command->username)) {
+        if ($user = $repository->findOneByUsername($event->username)) {
 
             $user->unlockAccount();
 

@@ -11,13 +11,13 @@
 //
 //----------------------------------------------------------------------
 
-namespace eTraxis\AccountsDomain\Application\Command;
+namespace eTraxis\AccountsDomain\Application\Event;
 
-use eTraxis\AccountsDomain\Application\CommandHandler\LockAccountHandler;
+use eTraxis\AccountsDomain\Application\EventListener\LockAccountListener;
 use eTraxis\AccountsDomain\Domain\Model\User;
 use eTraxis\SharedDomain\Framework\Tests\TransactionalTestCase;
 
-class LockAccountCommandTest extends TransactionalTestCase
+class LockAccountTest extends TransactionalTestCase
 {
     /** @var \Psr\Log\LoggerInterface */
     protected $logger;
@@ -38,21 +38,21 @@ class LockAccountCommandTest extends TransactionalTestCase
         /** @var \Pignus\Model\UserRepositoryInterface $repository */
         $repository = $this->doctrine->getRepository(User::class);
 
-        $command = new LockAccountCommand([
+        $event = new LoginFailedEvent([
             'username' => 'artem@example.com',
         ]);
 
-        $handler = new LockAccountHandler($this->logger, $this->manager, 2, 10);
+        $handler = new LockAccountListener($this->logger, $this->manager, 2, 10);
 
         // first time
-        $handler->handle($command);
+        $handler->handle($event);
 
         /** @var User $user */
         $user = $repository->findOneByUsername('artem@example.com');
         self::assertTrue($user->isAccountNonLocked());
 
         // second time
-        $handler->handle($command);
+        $handler->handle($event);
 
         $user = $repository->findOneByUsername('artem@example.com');
         self::assertFalse($user->isAccountNonLocked());
@@ -63,21 +63,21 @@ class LockAccountCommandTest extends TransactionalTestCase
         /** @var \Pignus\Model\UserRepositoryInterface $repository */
         $repository = $this->doctrine->getRepository(User::class);
 
-        $command = new LockAccountCommand([
+        $event = new LoginFailedEvent([
             'username' => 'artem@example.com',
         ]);
 
-        $handler = new LockAccountHandler($this->logger, $this->manager, 2, null);
+        $handler = new LockAccountListener($this->logger, $this->manager, 2, null);
 
         // first time
-        $handler->handle($command);
+        $handler->handle($event);
 
         /** @var User $user */
         $user = $repository->findOneByUsername('artem@example.com');
         self::assertTrue($user->isAccountNonLocked());
 
         // second time
-        $handler->handle($command);
+        $handler->handle($event);
 
         $user = $repository->findOneByUsername('artem@example.com');
         self::assertFalse($user->isAccountNonLocked());
@@ -88,21 +88,21 @@ class LockAccountCommandTest extends TransactionalTestCase
         /** @var \Pignus\Model\UserRepositoryInterface $repository */
         $repository = $this->doctrine->getRepository(User::class);
 
-        $command = new LockAccountCommand([
+        $event = new LoginFailedEvent([
             'username' => 'artem@example.com',
         ]);
 
-        $handler = new LockAccountHandler($this->logger, $this->manager, null, null);
+        $handler = new LockAccountListener($this->logger, $this->manager, null, null);
 
         // first time
-        $handler->handle($command);
+        $handler->handle($event);
 
         /** @var User $user */
         $user = $repository->findOneByUsername('artem@example.com');
         self::assertTrue($user->isAccountNonLocked());
 
         // second time
-        $handler->handle($command);
+        $handler->handle($event);
 
         $user = $repository->findOneByUsername('artem@example.com');
         self::assertTrue($user->isAccountNonLocked());

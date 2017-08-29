@@ -11,17 +11,18 @@
 //
 //----------------------------------------------------------------------
 
-namespace eTraxis\AccountsDomain\Application\Command;
+namespace eTraxis\AccountsDomain\Application\Event;
 
+use Symfony\Component\EventDispatcher\Event;
 use Symfony\Component\Validator\Constraints as Assert;
 use Webinarium\DataTransferObjectTrait;
 
 /**
- * Increases locks count for specified account.
+ * Specified account successfully logged in.
  *
- * @property string $username Username to lock.
+ * @property string $username Account's username.
  */
-class LockAccountCommand
+class LoginSuccessfulEvent extends Event
 {
     use DataTransferObjectTrait;
 

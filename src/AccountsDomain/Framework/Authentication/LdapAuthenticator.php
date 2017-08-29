@@ -13,11 +13,11 @@
 
 namespace eTraxis\AccountsDomain\Framework\Authentication;
 
-use eTraxis\AccountsDomain\Application\Command\RegisterExternalAccountCommand;
+use eTraxis\AccountsDomain\Application\Event\ExternalAccountLoadedEvent;
 use eTraxis\AccountsDomain\Domain\Dictionary\AccountProvider;
 use eTraxis\AccountsDomain\Domain\Dictionary\LdapServerType;
 use eTraxis\AccountsDomain\Domain\Model\User;
-use League\Tactician\CommandBus;
+use eTraxis\SharedDomain\Framework\EventBus\EventBusInterface;
 use Pignus\Authenticator\AbstractAuthenticator;
 use Symfony\Bundle\SecurityBundle\Security\FirewallMap;
 use Symfony\Component\HttpFoundation\Request;
@@ -35,7 +35,7 @@ use Symfony\Component\Security\Core\User\UserProviderInterface;
  */
 class LdapAuthenticator extends AbstractAuthenticator
 {
-    protected $commandbus;
+    protected $eventbus;
     protected $ldap;
     protected $type;
     protected $user;
@@ -49,7 +49,7 @@ class LdapAuthenticator extends AbstractAuthenticator
      * @param SessionInterface        $session
      * @param EncoderFactoryInterface $encoders
      * @param FirewallMap             $firewalls
-     * @param CommandBus              $commandbus
+     * @param EventBusInterface       $eventbus
      * @param LdapInterface           $ldap
      * @param string                  $type
      * @param string                  $user
@@ -61,7 +61,7 @@ class LdapAuthenticator extends AbstractAuthenticator
         SessionInterface        $session,
         EncoderFactoryInterface $encoders,
         FirewallMap             $firewalls,
-        CommandBus              $commandbus,
+        EventBusInterface       $eventbus,
         LdapInterface           $ldap     = null,
         string                  $type     = null,
         string                  $user     = null,
@@ -71,12 +71,12 @@ class LdapAuthenticator extends AbstractAuthenticator
     {
         parent::__construct($router, $session, $encoders, $firewalls);
 
-        $this->commandbus = $commandbus;
-        $this->ldap       = $ldap;
-        $this->type       = $type;
-        $this->user       = $user;
-        $this->password   = $password;
-        $this->basedn     = $basedn;
+        $this->eventbus = $eventbus;
+        $this->ldap     = $ldap;
+        $this->type     = $type;
+        $this->user     = $user;
+        $this->password = $password;
+        $this->basedn   = $basedn;
     }
 
     /**
@@ -129,14 +129,14 @@ class LdapAuthenticator extends AbstractAuthenticator
             return null;
         }
 
-        $command = new RegisterExternalAccountCommand([
+        $event = new ExternalAccountLoadedEvent([
             'provider' => AccountProvider::LDAP,
             'uid'      => $uid,
             'email'    => $credentials['username'],
             'fullname' => $fullname,
         ]);
 
-        $this->commandbus->handle($command);
+        $this->eventbus->notify($event);
 
         return $userProvider->loadUserByUsername($credentials['username']);
     }

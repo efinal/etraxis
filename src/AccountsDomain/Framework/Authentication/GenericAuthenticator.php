@@ -13,9 +13,9 @@
 
 namespace eTraxis\AccountsDomain\Framework\Authentication;
 
-use eTraxis\AccountsDomain\Application\Command\LockAccountCommand;
-use eTraxis\AccountsDomain\Application\Command\UnlockAccountCommand;
-use League\Tactician\CommandBus;
+use eTraxis\AccountsDomain\Application\Event\LoginFailedEvent;
+use eTraxis\AccountsDomain\Application\Event\LoginSuccessfulEvent;
+use eTraxis\SharedDomain\Framework\EventBus\EventBusInterface;
 use Pignus\Authenticator\AbstractAuthenticator;
 use Symfony\Bundle\SecurityBundle\Security\FirewallMap;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
@@ -30,7 +30,7 @@ use Symfony\Component\Security\Core\User\UserProviderInterface;
  */
 class GenericAuthenticator extends AbstractAuthenticator
 {
-    protected $commandbus;
+    protected $eventbus;
 
     /**
      * Dependency Injection constructor.
@@ -39,19 +39,19 @@ class GenericAuthenticator extends AbstractAuthenticator
      * @param SessionInterface        $session
      * @param EncoderFactoryInterface $encoders
      * @param FirewallMap             $firewalls
-     * @param CommandBus              $commandbus
+     * @param EventBusInterface       $eventbus
      */
     public function __construct(
         RouterInterface         $router,
         SessionInterface        $session,
         EncoderFactoryInterface $encoders,
         FirewallMap             $firewalls,
-        CommandBus              $commandbus
+        EventBusInterface       $eventbus
     )
     {
         parent::__construct($router, $session, $encoders, $firewalls);
 
-        $this->commandbus = $commandbus;
+        $this->eventbus = $eventbus;
     }
 
     /**
@@ -77,19 +77,19 @@ class GenericAuthenticator extends AbstractAuthenticator
         try {
             parent::checkCredentials($credentials, $user);
 
-            $command = new UnlockAccountCommand([
+            $event = new LoginSuccessfulEvent([
                 'username' => $credentials['username'],
             ]);
 
-            $this->commandbus->handle($command);
+            $this->eventbus->notify($event);
         }
         catch (AuthenticationException $e) {
 
-            $command = new LockAccountCommand([
+            $event = new LoginFailedEvent([
                 'username' => $credentials['username'],
             ]);
 
-            $this->commandbus->handle($command);
+            $this->eventbus->notify($event);
 
             throw $e;
         }

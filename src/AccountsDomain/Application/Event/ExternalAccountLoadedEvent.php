@@ -11,20 +11,21 @@
 //
 //----------------------------------------------------------------------
 
-namespace eTraxis\AccountsDomain\Application\Command;
+namespace eTraxis\AccountsDomain\Application\Event;
 
+use Symfony\Component\EventDispatcher\Event;
 use Symfony\Component\Validator\Constraints as Assert;
 use Webinarium\DataTransferObjectTrait;
 
 /**
- * Registers external account in eTraxis database.
+ * External account info is loaded.
  *
  * @property string $provider Account provider.
  * @property string $uid      Account UID as in the provider's system.
- * @property string $email    Email address to store/update.
- * @property string $fullname Full name to store/update.
+ * @property string $email    Email address as in the provider's system.
+ * @property string $fullname Full name as in the provider's system.
  */
-class RegisterExternalAccountCommand
+class ExternalAccountLoadedEvent extends Event
 {
     use DataTransferObjectTrait;
 

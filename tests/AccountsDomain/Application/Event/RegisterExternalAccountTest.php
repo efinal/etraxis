@@ -11,13 +11,13 @@
 //
 //----------------------------------------------------------------------
 
-namespace eTraxis\AccountsDomain\Application\Command;
+namespace eTraxis\AccountsDomain\Application\Event;
 
 use eTraxis\AccountsDomain\Domain\Dictionary\AccountProvider;
 use eTraxis\AccountsDomain\Domain\Model\User;
 use eTraxis\SharedDomain\Framework\Tests\TransactionalTestCase;
 
-class RegisterExternalAccountCommandTest extends TransactionalTestCase
+class RegisterExternalAccountTest extends TransactionalTestCase
 {
     public function testRegisterUser()
     {
@@ -35,14 +35,14 @@ class RegisterExternalAccountCommandTest extends TransactionalTestCase
         self::assertNull($user);
 
         // first time (user never was registered before)
-        $command = new RegisterExternalAccountCommand([
+        $event = new ExternalAccountLoadedEvent([
             'provider' => AccountProvider::LDAP,
             'uid'      => $uid,
             'email'    => 'earlene.gibson@example.com',
             'fullname' => 'Earlene Gibson',
         ]);
 
-        $this->commandbus->handle($command);
+        $this->eventbus->notify($event);
 
         $user = $repository->findOneBy([
             'accountProvider' => AccountProvider::LDAP,
@@ -58,14 +58,14 @@ class RegisterExternalAccountCommandTest extends TransactionalTestCase
         $id = $user->id;
 
         // second time (assume the user changed his last name)
-        $command = new RegisterExternalAccountCommand([
+        $event = new ExternalAccountLoadedEvent([
             'provider' => AccountProvider::LDAP,
             'uid'      => $uid,
             'email'    => 'earlene.doyle@example.com',
             'fullname' => 'Earlene Doyle',
         ]);
 
-        $this->commandbus->handle($command);
+        $this->eventbus->notify($event);
 
         $user = $repository->findOneBy([
             'accountProvider' => AccountProvider::LDAP,
@@ -81,12 +81,12 @@ class RegisterExternalAccountCommandTest extends TransactionalTestCase
     }
 
     /**
-     * @expectedException \League\Tactician\Bundle\Middleware\InvalidCommandException
+     * @expectedException \eTraxis\SharedDomain\Framework\EventBus\InvalidEventException
      */
     public function testBadRequest()
     {
-        $command = new RegisterExternalAccountCommand();
+        $event = new ExternalAccountLoadedEvent();
 
-        $this->commandbus->handle($command);
+        $this->eventbus->notify($event);
     }
 }

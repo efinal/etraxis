@@ -11,17 +11,18 @@
 //
 //----------------------------------------------------------------------
 
-namespace eTraxis\AccountsDomain\Application\CommandHandler;
+namespace eTraxis\AccountsDomain\Application\EventListener;
 
 use Doctrine\Common\Persistence\ObjectManager;
-use eTraxis\AccountsDomain\Application\Command\RegisterExternalAccountCommand;
+use eTraxis\AccountsDomain\Application\Event\ExternalAccountLoadedEvent;
 use eTraxis\AccountsDomain\Domain\Model\User;
 use Psr\Log\LoggerInterface;
+use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 /**
- * Command handler.
+ * Event listener.
  */
-class RegisterExternalAccountHandler
+class RegisterExternalAccountListener implements EventSubscriberInterface
 {
     protected $logger;
     protected $manager;
@@ -45,33 +46,43 @@ class RegisterExternalAccountHandler
     }
 
     /**
+     * {@inheritdoc}
+     */
+    public static function getSubscribedEvents()
+    {
+        return [
+            ExternalAccountLoadedEvent::class => 'handle',
+        ];
+    }
+
+    /**
      * Registers external account in eTraxis database.
      * If specified account is already registered, its properties will be updated.
      *
-     * @param RegisterExternalAccountCommand $command
+     * @param ExternalAccountLoadedEvent $event
      */
-    public function handle(RegisterExternalAccountCommand $command)
+    public function handle(ExternalAccountLoadedEvent $event)
     {
         $repository = $this->manager->getRepository(User::class);
 
         /** @var User $user */
         $user = $repository->findOneBy([
-            'accountProvider' => $command->provider,
-            'accountUid'      => $command->uid,
+            'accountProvider' => $event->provider,
+            'accountUid'      => $event->uid,
         ]);
 
         // If we can't find the account by its UID, try to find by the email.
         if ($user === null) {
-            $this->logger->info('Cannot find by UID.', [$command->provider, $command->uid]);
+            $this->logger->info('Cannot find by UID.', [$event->provider, $event->uid]);
 
             $user = $repository->findOneBy([
-                'email' => $command->email,
+                'email' => $event->email,
             ]);
         }
 
         // Register new account.
         if ($user === null) {
-            $this->logger->info('Register external account.', [$command->email, $command->fullname]);
+            $this->logger->info('Register external account.', [$event->email, $event->fullname]);
 
             $user = new User();
 
@@ -80,13 +91,13 @@ class RegisterExternalAccountHandler
         }
         // The account already exists - update it.
         else {
-            $this->logger->info('Update external account.', [$command->email, $command->fullname]);
+            $this->logger->info('Update external account.', [$event->email, $event->fullname]);
         }
 
-        $user->accountProvider = $command->provider;
-        $user->accountUid      = $command->uid;
-        $user->email           = $command->email;
-        $user->fullname        = $command->fullname;
+        $user->accountProvider = $event->provider;
+        $user->accountUid      = $event->uid;
+        $user->email           = $event->email;
+        $user->fullname        = $event->fullname;
 
         $this->manager->persist($user);
     }

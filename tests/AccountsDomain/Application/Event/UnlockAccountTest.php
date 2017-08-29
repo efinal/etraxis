@@ -11,12 +11,12 @@
 //
 //----------------------------------------------------------------------
 
-namespace eTraxis\AccountsDomain\Application\Command;
+namespace eTraxis\AccountsDomain\Application\Event;
 
 use eTraxis\AccountsDomain\Domain\Model\User;
 use eTraxis\SharedDomain\Framework\Tests\TransactionalTestCase;
 
-class UnlockAccountCommandTest extends TransactionalTestCase
+class UnlockAccountTest extends TransactionalTestCase
 {
     public function testUnlockUser()
     {
@@ -29,11 +29,11 @@ class UnlockAccountCommandTest extends TransactionalTestCase
 
         self::assertFalse($user->isAccountNonLocked());
 
-        $command = new UnlockAccountCommand([
+        $event = new LoginSuccessfulEvent([
             'username' => $user->getUsername(),
         ]);
 
-        $this->commandbus->handle($command);
+        $this->eventbus->notify($event);
 
         self::assertTrue($user->isAccountNonLocked());
     }

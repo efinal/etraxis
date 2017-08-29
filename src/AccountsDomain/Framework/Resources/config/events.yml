@@ -1,0 +1,19 @@
+services:
+
+    _defaults:
+        autowire: true
+        autoconfigure: true
+        public: false
+
+    eTraxis\AccountsDomain\Application\EventListener\:
+        resource: '../../../Application/EventListener'
+
+    # Autowiring hints
+    eTraxis\AccountsDomain\Application\EventListener\LockAccountListener:
+        $authFailures: '%auth_failures%'
+        $lockDuration: '%lock_duration%'
+
+    # Autowiring hints
+    eTraxis\AccountsDomain\Application\EventListener\RegisterExternalAccountListener:
+        $locale: '%locale%'
+        $theme:  '%theme%'
