@@ -37,6 +37,7 @@ return PhpCsFixer\Config::create()
         'braces'                                        => false,
         'cast_spaces'                                   => true,
         'class_keyword_remove'                          => false,
+        'combine_consecutive_issets'                    => true,
         'combine_consecutive_unsets'                    => true,
         'concat_space'                                  => [
             'spacing' => 'one',
@@ -77,6 +78,7 @@ return PhpCsFixer\Config::create()
         'no_empty_phpdoc'                               => true,
         'no_empty_statement'                            => true,
         'no_extra_consecutive_blank_lines'              => true,
+        'no_homoglyph_names'                            => true,
         'no_leading_import_slash'                       => true,
         'no_leading_namespace_whitespace'               => true,
         'no_mixed_echo_print'                           => true,
@@ -162,6 +164,7 @@ return PhpCsFixer\Config::create()
         'unary_operator_spaces'                         => true,
         'void_return'                                   => false,
         'whitespace_after_comma_in_array'               => true,
+        'yoda_style'                                    => false,
     ])
     ->setFinder($finder)
 ;
