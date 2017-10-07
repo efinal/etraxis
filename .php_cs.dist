@@ -28,8 +28,7 @@ return PhpCsFixer\Config::create()
             'syntax' => 'short',
         ],
         'binary_operator_spaces'                        => [
-            'align_double_arrow' => true,
-            'align_equals'       => true,
+            'default' => 'align',
         ],
         'blank_line_after_opening_tag'                  => true,
         'blank_line_before_return'                      => true,
@@ -164,7 +163,7 @@ return PhpCsFixer\Config::create()
         'unary_operator_spaces'                         => true,
         'void_return'                                   => false,
         'whitespace_after_comma_in_array'               => true,
-        'yoda_style'                                    => false,
+        'yoda_style'                                    => null,
     ])
     ->setFinder($finder)
 ;

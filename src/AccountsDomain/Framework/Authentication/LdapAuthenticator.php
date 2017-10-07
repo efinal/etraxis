@@ -123,7 +123,7 @@ class LdapAuthenticator extends AbstractAuthenticator
         $attributes = $entries[0]->getAttributes();
 
         $uid      = $attributes[LdapServerType::get($this->type)][0] ?? null;
-        $fullname = $attributes['cn'][0] ?? null;
+        $fullname = $attributes['cn'][0]                             ?? null;
 
         if ($uid === null || $fullname === null) {
             return null;
