@@ -21,6 +21,7 @@ use Symfony\Bundle\SecurityBundle\Security\FirewallMap;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\Security\Core\Encoder\EncoderFactoryInterface;
+use Symfony\Component\Translation\TranslatorInterface;
 
 class GenericAuthenticatorTest extends TransactionalTestCase
 {
@@ -39,13 +40,16 @@ class GenericAuthenticatorTest extends TransactionalTestCase
         /** @var SessionInterface $session */
         $session = $this->createMock(SessionInterface::class);
 
+        /** @var TranslatorInterface $translator */
+        $translator = $this->createMock(TranslatorInterface::class);
+
         /** @var EncoderFactoryInterface $encoders */
         $encoders = $this->client->getContainer()->get('security.encoder_factory');
 
         /** @var FirewallMap $firewall */
         $firewall = $this->createMock(FirewallMap::class);
 
-        $this->authenticator = new GenericAuthenticator($router, $session, $encoders, $firewall, $this->eventbus);
+        $this->authenticator = new GenericAuthenticator($router, $session, $translator, $encoders, $firewall, $this->eventbus);
     }
 
     public function testGetUser()

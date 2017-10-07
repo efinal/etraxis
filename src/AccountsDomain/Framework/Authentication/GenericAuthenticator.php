@@ -24,6 +24,7 @@ use Symfony\Component\Security\Core\Encoder\EncoderFactoryInterface;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\User\UserProviderInterface;
+use Symfony\Component\Translation\TranslatorInterface;
 
 /**
  * Authenticates user against the database.
@@ -37,6 +38,7 @@ class GenericAuthenticator extends AbstractAuthenticator
      *
      * @param RouterInterface         $router
      * @param SessionInterface        $session
+     * @param TranslatorInterface     $translator
      * @param EncoderFactoryInterface $encoders
      * @param FirewallMap             $firewalls
      * @param EventBusInterface       $eventbus
@@ -44,12 +46,13 @@ class GenericAuthenticator extends AbstractAuthenticator
     public function __construct(
         RouterInterface         $router,
         SessionInterface        $session,
+        TranslatorInterface     $translator,
         EncoderFactoryInterface $encoders,
         FirewallMap             $firewalls,
         EventBusInterface       $eventbus
     )
     {
-        parent::__construct($router, $session, $encoders, $firewalls);
+        parent::__construct($router, $session, $translator, $encoders, $firewalls);
 
         $this->eventbus = $eventbus;
     }

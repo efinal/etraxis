@@ -28,6 +28,7 @@ use Symfony\Component\Ldap\LdapInterface;
 use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\Security\Core\Encoder\EncoderFactoryInterface;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;
+use Symfony\Component\Translation\TranslatorInterface;
 
 class LdapAuthenticatorTest extends TransactionalTestCase
 {
@@ -45,6 +46,9 @@ class LdapAuthenticatorTest extends TransactionalTestCase
     /** @var SessionInterface */
     protected $session;
 
+    /** @var TranslatorInterface */
+    protected $translator;
+
     /** @var EncoderFactoryInterface */
     protected $encoders;
 
@@ -58,10 +62,11 @@ class LdapAuthenticatorTest extends TransactionalTestCase
         $this->repository = $this->doctrine->getRepository(User::class);
         $this->provider   = new GenericUserProvider($this->repository);
 
-        $this->router   = $this->createMock(RouterInterface::class);
-        $this->session  = $this->createMock(SessionInterface::class);
-        $this->encoders = $this->createMock(EncoderFactoryInterface::class);
-        $this->firewall = $this->createMock(FirewallMap::class);
+        $this->router     = $this->createMock(RouterInterface::class);
+        $this->session    = $this->createMock(SessionInterface::class);
+        $this->translator = $this->createMock(TranslatorInterface::class);
+        $this->encoders   = $this->createMock(EncoderFactoryInterface::class);
+        $this->firewall   = $this->createMock(FirewallMap::class);
     }
 
     public function testLdapMinimumConfig()
@@ -134,6 +139,7 @@ class LdapAuthenticatorTest extends TransactionalTestCase
         $authenticator = new LdapAuthenticator(
             $this->router,
             $this->session,
+            $this->translator,
             $this->encoders,
             $this->firewall,
             $this->eventbus,
@@ -185,6 +191,7 @@ class LdapAuthenticatorTest extends TransactionalTestCase
         $authenticator = new LdapAuthenticator(
             $this->router,
             $this->session,
+            $this->translator,
             $this->encoders,
             $this->firewall,
             $this->eventbus,
@@ -243,6 +250,7 @@ class LdapAuthenticatorTest extends TransactionalTestCase
         $authenticator = new LdapAuthenticator(
             $this->router,
             $this->session,
+            $this->translator,
             $this->encoders,
             $this->firewall,
             $this->eventbus,
@@ -281,6 +289,7 @@ class LdapAuthenticatorTest extends TransactionalTestCase
         $authenticator = new LdapAuthenticator(
             $this->router,
             $this->session,
+            $this->translator,
             $this->encoders,
             $this->firewall,
             $this->eventbus,
@@ -307,6 +316,7 @@ class LdapAuthenticatorTest extends TransactionalTestCase
         $authenticator = new LdapAuthenticator(
             $this->router,
             $this->session,
+            $this->translator,
             $this->encoders,
             $this->firewall,
             $this->eventbus
@@ -327,6 +337,7 @@ class LdapAuthenticatorTest extends TransactionalTestCase
         $authenticator = new LdapAuthenticator(
             $this->router,
             $this->session,
+            $this->translator,
             $this->encoders,
             $this->firewall,
             $this->eventbus,
@@ -354,6 +365,7 @@ class LdapAuthenticatorTest extends TransactionalTestCase
         $authenticator = new LdapAuthenticator(
             $this->router,
             $this->session,
+            $this->translator,
             $this->encoders,
             $this->firewall,
             $this->eventbus,
@@ -377,6 +389,7 @@ class LdapAuthenticatorTest extends TransactionalTestCase
         $authenticator = new LdapAuthenticator(
             $this->router,
             $this->session,
+            $this->translator,
             $this->encoders,
             $this->firewall,
             $this->eventbus
@@ -398,6 +411,7 @@ class LdapAuthenticatorTest extends TransactionalTestCase
         $authenticator = new LdapAuthenticator(
             $this->router,
             $this->session,
+            $this->translator,
             $this->encoders,
             $this->firewall,
             $this->eventbus
@@ -414,6 +428,7 @@ class LdapAuthenticatorTest extends TransactionalTestCase
         $authenticator = new LdapAuthenticator(
             $this->router,
             $this->session,
+            $this->translator,
             $this->encoders,
             $this->firewall,
             $this->eventbus
@@ -429,6 +444,7 @@ class LdapAuthenticatorTest extends TransactionalTestCase
         $authenticator = new LdapAuthenticator(
             $this->router,
             $this->session,
+            $this->translator,
             $this->encoders,
             $this->firewall,
             $this->eventbus
